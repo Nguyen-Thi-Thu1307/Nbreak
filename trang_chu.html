@@ -1,0 +1,1681 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nbreak</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+<link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="thong_bao.css" />
+    <link rel="stylesheet" href="account.css" />
+    <link rel="stylesheet" href="history.css" />
+    <link rel="stylesheet" href="uu_dai.css" />
+    <link rel="stylesheet" href="menu.css" />
+    <link rel="icon" type="image/jpg" href="image/logo.jpg" />
+  </head>
+
+  <body>
+    <header>
+      <div class="header-khung">
+        <a href="trang_chu.html" class="logo">
+          <img src="image/logo.jpg" alt="Logo Nbreak" class="logo-vong" />
+          <div class="logo-text">Nbreak</div>
+        </a>
+
+        <!-- THANH TÌM KIẾM -->
+        <div class="timkiem">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Nhập sản phẩm bạn muốn tìm..."
+            onkeypress="handleSearch(event)"
+          />
+          <i
+            class="fa-solid fa-magnifying-glass search-icon"
+            onclick="performSearch()"
+          ></i>
+        </div>
+
+        <div class="nut-dieu-huong">
+       <div class="nav-item-box dropdown">
+  <a href="menu.html" class="nav-link-main" style="color: #c8a27c">
+    <i class="fa-solid fa-clipboard-list nav-icon"></i>
+    <span class="nav-text">Menu <i class="fa-solid fa-chevron-down" style="font-size: 8px"></i></span>
+  </a>
+  <ul class="dropdown-content">
+    <li><a href="menu.html#coffee">Coffee</a></li>
+    <li><a href="menu.html#sinhto">Sinh tố</a></li>
+    <li><a href="menu.html#trasua">Trà sữa</a></li>
+    <li><a href="menu.html#nuocep">Nước ép</a></li>
+    <li><a href="menu.html#travi">Trà vị</a></li>
+    <li><a href="menu.html#doanvat">Đồ ăn vặt</a></li>
+    <li><a href="menu.html#banhngot">Bánh ngọt</a></li>
+    <li><a href="menu.html#combodoanvat">Combo đồ ăn vặt</a></li>
+    <li><a href="menu.html#combodouong">Combo đồ uống</a></li>
+    <li><a href="menu.html#combo">Combo</a></li>
+  </ul>
+</div>
+
+   <a href="uu_dai.html" class="nav-item-box">
+            <i class="fa-solid fa-tags nav-icon"></i>
+            <span class="nav-text">Ưu đãi</span>
+          </a>
+
+          <a href="lien_he.html" class="nav-item-box">
+            <i class="fa-solid fa-headset nav-icon"></i>
+            <span class="nav-text">Liên hệ</span>
+          </a>
+
+          <a href="gioi_thieu.html" class="nav-item-box">
+            <i class="fa-solid fa-address-card nav-icon"></i>
+            <span class="nav-text">Giới thiệu</span>
+          </a>
+
+<a href="javascript:void(0)" onclick="openCheckout()" class="nav-item-box cart-icon-fix">
+  <div class="icon-badge-container">
+    <span id="cart-count">0</span>
+    <i class="fa-solid fa-cart-shopping nav-icon"></i>
+  </div>
+  <span class="nav-text">Giỏ hàng</span>
+</a>
+
+       <!-- NÚT THÔNG BÁO (GIỮ NGUYÊN CHỨC NĂNG POPUP) -->
+<div class="nav-item-box" onclick="openNotifications()">
+  <div class="icon-badge-container">
+    <span id="notification-badge" class="notification-badge" style="display: none;">0</span>
+    <i class="fa-solid fa-bell nav-icon"></i>
+  </div>
+  <span class="nav-text">Thông báo</span>
+</div>
+
+<!-- NÚT TÀI KHOẢN -->
+  <div class="nav-item-box" id="account-btn" onclick="toggleAccountMenu()">
+    <div class="icon-badge-container">
+      <i class="fa-solid fa-user nav-icon"></i>
+    </div>
+    <span class="nav-text" id="account-text">Tài khoản</span>
+
+  <!-- DROPDOWN TÀI KHOẢN -->
+<div id="account-dropdown" class="account-dropdown">
+  <div class="account-header">
+    <i class="fa-solid fa-circle-user"></i>
+    <div>
+      <div id="dropdown-username">Khách hàng</div>
+      <div id="dropdown-email">Chưa đăng nhập</div>
+    </div>
+  </div>
+  <div class="dropdown-divider"></div>
+  <a href="javascript:void(0)" onclick="openProfile()">
+    <i class="fa-solid fa-id-card"></i> Thông tin cá nhân
+  </a>
+  <a href="javascript:void(0)" onclick="openOrderHistory()">
+    <i class="fa-solid fa-clock-rotate-left"></i> Đơn mua
+  </a>
+  <div class="dropdown-divider"></div>
+  <a href="javascript:void(0)" id="login-logout-btn" onclick="openAuthModal()">
+    <i class="fa-solid fa-right-to-bracket"></i> <span id="login-logout-text">Đăng nhập</span>
+  </a>
+</div>
+        </div>
+      </div>
+    </header>
+
+    <!-- BANNER QUẢNG CÁO CHUYỂN ĐỘNG -->
+    <div class="banner-slider">
+      <div class="banner-container">
+
+       <!-- Slide 1: Mua 1 tặng 1 -->
+<div class="banner-slide active">
+  <div class="banner-content" style="background: linear-gradient(135deg, #4b2e2b, #6f4e37)">
+    <div class="banner-product">
+      <img src="./image/cafe_latte.png" alt="Cafe Latte" />
+      <img src="./image/cafe_sua.png" alt="Cafe Sữa" />
+    </div>
+    <div class="banner-text">
+      <span class="banner-tag">🔥 HOT DEAL</span>
+      <h3>Mua 1 Tặng 1</h3>
+      <p>Áp dụng cho tất cả Coffee từ 7h - 9h sáng hàng ngày</p>
+            <a href="javascript:void(0)" class="banner-btn" onclick="goToCategory('coffee')">Đặt ngay →</a>
+    </div>
+    <div class="banner-icon">
+      <i class="fa-solid fa-mug-hot"></i>
+    </div>
+  </div>
+</div>
+      <!-- Slide 2: Ưu đãi sinh viên -->
+<div class="banner-slide">
+  <div class="banner-content" style="background: linear-gradient(135deg, #c8a27c, #a67c52)">
+    <div class="banner-product">
+      <img src="./image/ts_matcha_latte.png" alt="Trà sữa Matcha Latte" />
+      <img src="./image/ts_dau_tay.png" alt="Trà sữa dâu tây" />
+    </div>
+    <div class="banner-text">
+      <span class="banner-tag">🎓 SINH VIÊN</span>
+      <h3>Ưu đãi sinh viên</h3>
+      <p>Giảm 10% khi xuất trình thẻ sinh viên</p>
+      <a href="javascript:void(0)" class="banner-btn" onclick="goToCategory('all')">Xem chi tiết →</a>
+    </div>
+    <div class="banner-icon">
+      <i class="fa-solid fa-user-graduate"></i>
+    </div>
+  </div>
+</div>
+
+        <!-- Slide 3: Cuối tuần -->
+<div class="banner-slide">
+  <div class="banner-content" style="background: linear-gradient(135deg, #e67e22, #d35400)">
+    <div class="banner-product">
+      <img src="./image/pho_mai_que.png" alt="Phô mai que" />
+      <img src="./image/xuc_xich.png" alt="Xúc xích" />
+    </div>
+    <div class="banner-text">
+      <span class="banner-tag">🎉 CUỐI TUẦN</span>
+      <h3>Cuối tuần vui vẻ</h3>
+      <p>Giảm 10% cho đơn hàng từ 100k vào Thứ 7 & Chủ Nhật</p>
+      <a href="javascript:void(0)" class="banner-btn" onclick="goToCategory('all')">Nhận ưu đãi →</a>
+    </div>
+    <div class="banner-icon">
+      <i class="fa-solid fa-calendar-week"></i>
+    </div>
+  </div>
+</div>
+        <!-- Slide 4: Combo tiết kiệm -->
+<div class="banner-slide">
+  <div class="banner-content" style="background: linear-gradient(135deg, #2ecc71, #27ae60);">
+    <div class="banner-product">
+      <img src="./image/combo_1.png" alt="Combo">
+      <img src="./image/douong_1.png" alt="Đồ uống">
+    </div>
+    <div class="banner-text">
+      <span class="banner-tag">🍱 TIẾT KIỆM</span>
+      <h3>Combo tiết kiệm</h3>
+      <p>Mua combo đồ uống + đồ ăn vặt tiết kiệm đến 30k</p>
+      <a href="javascript:void(0)" class="banner-btn" onclick="goToCategory('combo')">Xem combo →</a>
+    </div>
+    <div class="banner-icon">  
+      <i class="fa-solid fa-bag-shopping"></i>
+    </div>
+  </div>
+</div>
+
+      <!-- Nút điều khiển -->
+      <button class="banner-prev" onclick="prevBanner()">❮</button>
+      <button class="banner-next" onclick="nextBanner()">❯</button>
+
+      <!-- Chấm tròn chỉ mục -->
+      <div class="banner-dots">
+        <span class="dot active" onclick="goToBanner(0)"></span>
+        <span class="dot" onclick="goToBanner(1)"></span>
+        <span class="dot" onclick="goToBanner(2)"></span>
+        <span class="dot" onclick="goToBanner(3)"></span>
+      </div>
+    </div>
+
+    <!-- THẺ MENU -->
+    <div class="khung-trang">
+      <div class="noi-dung">
+        <div class="menu-trai">
+          <ul>
+            <li>Coffee</li>
+            <li>Sinh tố</li>
+            <li>Trà sữa</li>
+            <li>Nước ép</li>
+            <li>Trà vị</li>
+            <li>Đồ ăn vặt</li>
+            <li>Bánh ngọt</li>
+            <li>Combo đồ ăn vặt</li>
+            <li>Combo đồ uống</li>
+            <li>Combo</li>
+          </ul>
+        </div>
+
+        <!-- CAFE -->
+        <div class="luoi-sanpham" id="grid-all-products">
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cafe_sua_da.png"
+              alt="Cafe sữa đá"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe sữa đá', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe sữa đá</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe sữa đá')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cafe_den.png"
+              alt="Cafe đen"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe đen', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe đen</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe đen')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cafe_phin.png"
+              alt="Cafe phin"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe phin', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe phin</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe phin')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img class="sanpham-anh" src="./image/cafe_latte.png" alt="Cafe Latte" />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe Latte', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe Latte</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe Latte')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cafe_sua.png"
+              alt="Cafe Sữa"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe Sữa', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe Sữa</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe Sữa')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cafe_nau.png"
+              alt="Cafe nâu"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe nâu', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe nâu</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe nâu')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cafe_pho_mai_muoi.png"
+              alt="Cafe phô mai muối"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe phô mai muối', 40000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe phô mai muối</div>
+                <div class="price">40.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe phô mai muối')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cafe_muoi.png"
+              alt="Cafe muối"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cafe muối', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Cafe muối</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cafe muối')">-</button>
+            </div>
+          </div>
+
+          <!-- SINH TỐ -->
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/st_dau.jpg"
+              alt="Sinh tố dâu"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Sinh tố dâu', 35000)">+</button>
+              <div class="sanpham-info">
+                <div>Sinh tố dâu</div>
+                <div class="price">35.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Sinh tố dâu')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/st_bo.png"
+              alt="Sinh tố bơ"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Sinh tố bơ', 35000)">+</button>
+              <div class="sanpham-info">
+                <div>Sinh tố bơ</div>
+                <div class="price">35.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Sinh tố bơ')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/st_dao.png"
+              alt="Sinh tố đào"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Sinh tố đào', 35000)">+</button>
+              <div class="sanpham-info">
+                <div>Sinh tố đào</div>
+                <div class="price">35.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Sinh tố đào')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/st_chuoi.png"
+              alt="Sinh tố chuối"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Sinh tố chuối', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Sinh tố chuối</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Sinh tố chuối')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/st_tao.png"
+              alt="Sinh tố táo"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Sinh tố táo', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Sinh tố táo</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Sinh tố táo')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/st_xoai.png"
+              alt="Sinh tố xoài"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Sinh tố xoài', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Sinh tố xoài</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Sinh tố xoài')">-</button>
+            </div>
+          </div>
+
+           <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/st_viet_quat.png"
+              alt="Sinh tố việt quất"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Sinh tố việt quất', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Sinh tố việt quất</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Sinh tố việt quất')">-</button>
+            </div>
+          </div>
+
+          <!-- TRÀ SỮA -->
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_matcha_latte.png"
+              alt="Trà sữa Mattcha Latte"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa Matcha Latte', 28000)">
+                +
+              </button>
+              <div class="sanpham-info">
+                <div>Trà sữa Matcha Latte</div>
+                <div class="price">28.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa Matcha Latte')">
+                -
+              </button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_socola.png"
+              alt="Trà sữa Socola"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa Socola', 28000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa Socola</div>
+                <div class="price">28.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa Socola')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_dau_tay.png"
+              alt="Trà sữa dâu tây"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa dâu tây', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa dâu tây</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa dâu tây')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_kem_trung.png"
+              alt="Trà sữa kem trứng"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa kem trứng', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa kem trứng</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa kem trứng')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_viet_quat.png"
+              alt="Trà sữa việt quất"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa việt quất', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa việt quất</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa việt quất')">-</button>
+            </div>
+          </div>
+
+          
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_khoai_mon.png"
+              alt="Trà sữa khoai môn"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa khoai môn', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa khoai môn</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa khoai môn')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_bac_ha.png"
+              alt="Trà sữa bạc hà"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa bạc hà', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa bạc hà</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa bạc hà')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_kiwi.png"
+              alt="Trà sữa Kiwi"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa Kiwi', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa Kiwi</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa Kiwi')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ts_o_long.png"
+              alt="Trà sữa Ô long"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà sữa Ô long', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà sữa Ô long</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà sữa Ô long')">-</button>
+            </div>
+          </div>
+
+          <!-- NƯỚC ÉP -->
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/dua_hau.png"
+              alt="Nước ép dưa hấu"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Nước ép dưa hấu', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Nước ép dưa hấu</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Nước ép dưa hấu')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cam.jpg"
+              alt="Nước ép cam"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Nước ép cam', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Nước ép cam</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Nước ép cam')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/chanh_day.png"
+              alt="Nước ép chanh dây"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Nước ép chanh dây', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Nước ép chanh dây</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Nước ép chanh dây')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/dua_luoi.png"
+              alt="Nước ép dưa lưới"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Nước ép dưa lưới', 25000)">
+                +
+              </button>
+              <div class="sanpham-info">
+                <div>Nước ép dưa lưới</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Nước ép dưa lưới')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/thom.png"
+              alt="Nước ép thơm"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Nước ép thơm', 18000)">+</button>
+              <div class="sanpham-info">
+                <div>Nước ép thơm</div>
+                <div class="price">18.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Nước ép thơm')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ca_rot.png"
+              alt="Nước ép cà rốt"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Nước ép cà rốt', 15000)">+</button>
+              <div class="sanpham-info">
+                <div>Nước ép cà rốt</div>
+                <div class="price">15.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Nước ép cà rốt')">-</button>
+            </div>
+          </div>
+
+          <!-- TRÀ VỊ -->
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/tra_dau_tam.png"
+              alt="Trà dâu tằm"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà dâu tằm', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà dâu tằm</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà dâu tằm')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/tra_bac_ha.png"
+              alt="Trà bạc hà"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà bạc hà', 18000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà bạc hà</div>
+                <div class="price">18.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà bạc hà')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/dao_sa.png"
+              alt="Trà đào cam sả"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà đào cam sả', 22000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà đào cam sả</div>
+                <div class="price">22.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà đào cam sả')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/tra_dao.png"
+              alt="Trà đào"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà đào', 18000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà đào</div>
+                <div class="price">18.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà đào')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/tra_dau.png"
+              alt="Trà dâu"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà dâu tây', 22000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà dâu tây</div>
+                <div class="price">22.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà dâu tây')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/nha_dam.png"
+              alt="Trà chanh nha đam"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà chanh nha đam', 18000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà chanh nha đam</div>
+                <div class="price">18.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà chanh nha đam')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/tra_chanh.png"
+              alt="Trà chanh"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Trà chanh', 18000)">+</button>
+              <div class="sanpham-info">
+                <div>Trà chanh</div>
+                <div class="price">18.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Trà chanh')">-</button>
+            </div>
+          </div>
+
+          <!-- ĐỒ ĂN VẶT -->
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/huong_duong.png" alt="Hạt hướng dương"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Hạt hướng dương', 10000)">+</button>
+              <div class="sanpham-info">
+                <div>Hạt hướng dương</div>
+                <div class="price">10.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Hạt hướng dương')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/pho_mai_que.png"
+              alt="Phô mai que"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Phô mai que', 40000)">+</button>
+              <div class="sanpham-info">
+                <div>Phô mai que</div>
+                <div class="price">40.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Phô mai que')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/xuc_xich.png"
+              alt="Xúc xích"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Xúc xích', 35000)">+</button>
+              <div class="sanpham-info">
+                <div>Xúc xích</div>
+                <div class="price">35.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Xúc xích')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/lap_xuong.png"
+              alt="Lạp xưởng"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Lạp xưởng', 45000)">+</button>
+              <div class="sanpham-info">
+                <div>Lạp xưởng</div>
+                <div class="price">45.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Lạp xưởng')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/tom_vien.png"
+              alt="Tôm viên chiên"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Tôm viên chiên', 40000)">+</button>
+              <div class="sanpham-info">
+                <div>Tôm viên chiên</div>
+                <div class="price">40.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Tôm viên chiên')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/ca_vien.png"
+              alt="Cá viên chiên"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cá viên chiên', 35000)">+</button>
+              <div class="sanpham-info">
+                <div>Cá viên chiên</div>
+                <div class="price">35.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cá viên chiên')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/bo_vien.png"
+              alt="Bò viên chiên"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bò viên chiên', 45000)">+</button>
+              <div class="sanpham-info">
+                <div>Bò viên chiên</div>
+                <div class="price">45.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bò viên chiên')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/nem.png"
+              alt="Nem chua rán"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Nem chua rán', 35000)">+</button>
+              <div class="sanpham-info">
+                <div>Nem chua rán</div>
+                <div class="price">35.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Nem chua rán')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/bo_kho.png"
+              alt="Bò khô"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bò khô', 50000)">+</button>
+              <div class="sanpham-info">
+                <div>Bò khô</div>
+                <div class="price">50.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bò khô')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/dui_ga.png"
+              alt="Đùi gà chiên KFC"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Đùi gà chiên KFC', 60000)">+</button>
+              <div class="sanpham-info">
+                <div>Đùi gà chiên KFC</div>
+                <div class="price">60.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Đùi gà chiên KFC')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/canh_ga.png"
+              alt="Cánh gà chiên"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Cánh gà chiên', 55000)">+</button>
+              <div class="sanpham-info">
+                <div>Cánh gà chiên</div>
+                <div class="price">55.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Cánh gà chiên')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/banh_goi.png"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh gối chiên', 55000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh gối chiên</div>
+                <div class="price">55.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh gối chiên')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/khoai_tay_lac_pho_mai.png"
+              alt="Khoai tây chiên lắc phô mai"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Khoai tây chiên lắc phô mai', 35000)">
+                +
+              </button>
+              <div class="sanpham-info">
+                <div>Khoai tây chiên lắc phô mai</div>
+                <div class="price">35.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Khoai tây chiên lắc phô mai')">
+                -
+              </button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/khoai_tay.png"
+              alt="Khoai tây chiên"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Khoai tây chiên', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Khoai tây chiên</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Khoai tây chiên')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/khoai_lang.png"
+              alt="Khoai lang chiên"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Khoai lang chiên', 30000)">+</button>
+              <div class="sanpham-info">
+                <div>Khoai lang chiên</div>
+                <div class="price">30.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Khoai lang chiên')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/hotdog.png"
+              alt="Hotdog xúc xích phô mai"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Hotdog xúc xích phô mai', 40000)">
+                +
+              </button>
+              <div class="sanpham-info">
+                <div>Hotdog xúc xích phô mai</div>
+                <div class="price">40.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Hotdog xúc xích phô mai')">
+                -
+              </button>
+            </div>
+          </div>
+
+          <!-- BÁNH NGỌT -->
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/flan.png"
+              alt="Bánh FLAN"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh FLAN', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh FLAN</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh FLAN')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/banh_ngot.png"
+              alt="Bánh ngọt"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh ngọt', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh ngọt</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh ngọt')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cotta.png"
+              alt="Bánh Panna Cotta"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh Panna Cotta', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh Panna Cotta</div>
+                <div class="price">20.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh Panna Cotta')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cookies.png"
+              alt="Bánh Cookies"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh Cookies', 20000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh Cookies</div>
+                <div class="price">20.000đ</div>
+              </div>
+<button onclick="removeFromCart('Bánh Cookies')">-</button>            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/tiramisu.png"
+              alt="Tiramisu"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Tiramisu', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Tiramisu</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Tiramisu')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/muffin.png"
+              alt="Bánh Muffin"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh Muffin', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh Muffin</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh Muffin')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/banh_mi.png"
+              alt="Bánh Mì"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh Mì', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh Mì</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh Mì')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/macaron.png"
+              alt="Bánh Macaron"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh Macaron', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh Macaron</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh Macaron')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cake.png"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh Mousse Cake', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh Mousse Cake</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh Mousse Cake')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/cheese.png"
+              alt="Bánh Cheese Cake"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Bánh Cheese Cake', 25000)">+</button>
+              <div class="sanpham-info">
+                <div>Bánh Cheese Cake</div>
+                <div class="price">25.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Bánh Cheese Cake')">-</button>
+            </div>
+          </div>
+          <!-- COMBO ĐỒ ĂN VẶT -->
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/anvat_1.png"
+              alt="Combo đồ ăn vặt 1"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ ăn vặt 1', 65000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ ăn vặt 1</div>
+                <div class="price">65.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ ăn vặt 1')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/anvat_2.png"
+              alt="Combo đồ ăn vặt 2"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ ăn vặt 2', 75000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ ăn vặt 2</div>
+                <div class="price">75.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ ăn vặt 2')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/anvat_3.png"
+              alt="Combo đồ ăn vặt 3"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ ăn vặt 3', 85000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ ăn vặt 3</div>
+                <div class="price">85.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ ăn vặt 3')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/anvat_4.png"
+              alt="Combo đồ ăn vặt 4"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ ăn vặt 4', 65000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ ăn vặt 4</div>
+                <div class="price">65.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ ăn vặt 4')">-</button>
+            </div>
+          </div>
+
+          <!-- COMBO ĐỒ UỐNG -->
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/douong_1.png"
+              alt="Combo đồ uống 1"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ uống 1', 45000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ uống 1</div>
+                <div class="price">45.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ uống 1')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/douong_2.png"
+              alt="Combo đồ uống 2"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ uống 2', 55000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ uống 2</div>
+                <div class="price">55.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ uống 2')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/douong_3.png"
+              alt="Combo đồ uống 3"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ uống 3', 55000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ uống 3</div>
+                <div class="price">55.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ uống 3')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/douong_4.png"
+              alt="Combo đồ uống 4"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ uống 4', 55000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ uống 4</div>
+                <div class="price">55.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ uống 4')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/douong_5.png"
+              alt="Combo đồ uống 5"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ uống 5', 55000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ uống 5</div>
+                <div class="price">55.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ uống 5')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/douong_6.png"
+              alt="Combo đồ uống 6"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo đồ uống 6', 55000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo đồ uống 6</div>
+                <div class="price">55.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo đồ uống 6')">-</button>
+            </div>
+          </div>
+
+          <!-- COMBO -->
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/combo_1.png"
+              alt="Combo 1"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo 1', 60000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo 1</div>
+                <div class="price">60.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo 1')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/combo_2.png"
+              alt="Combo 2"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo 2', 60000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo 2</div>
+                <div class="price">60.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo 2')">-</button>
+            </div>
+          </div>
+
+          <div class="sanpham">
+            <img
+              class="sanpham-anh"
+              src="./image/combo_3.png"
+              alt="Combo 3"
+            />
+            <div class="sanpham-bottom">
+              <button onclick="addToCart('Combo 3', 60000)">+</button>
+              <div class="sanpham-info">
+                <div>Combo 3</div>
+                <div class="price">60.000đ</div>
+              </div>
+              <button onclick="removeFromCart('Combo 3')">-</button>
+            </div>
+          </div>
+        </div>
+    </div>
+  </div>
+    <footer>
+      <div class="footer-container">
+        <div class="footer-left">
+          <h3>☕ Nbreak</h3>
+          <p>Chất lượng – Đậm vị – Tinh tế</p>
+        </div>
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <p>
+            📧 Email: <a href="mailto:contact@nbreak.com">contact@nbreak.com</a>
+          </p>
+          <p>☎️ Điện thoại: 0123 456 789</p>
+          <p>🏫 Địa chỉ: 207 Giải Phóng, Phường Bạch Mai, Hà Nội</p>
+        </div>
+        <div class="footer-social">
+          <h4>Theo dõi chúng tôi</h4>
+          <p>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Zalo</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p><b>© 2026 Nbreak | NHÓM 11 – THIẾT KẾ WEB</b></p>
+      </div>
+    </footer>
+  <!-- POPUP CHECKOUT -->
+<div id="checkout-popup" class="popup">
+  <div class="popup-content" style="max-width: 500px;">
+    <span class="close" onclick="closeCheckout()" style="float: right; font-size: 28px; cursor: pointer; color: #999;">&times;</span>
+    <h2 style="color: #4b2e2b; text-align: center;">🛒 Xác nhận đơn hàng</h2>
+    <hr />
+    
+    <!-- Danh sách sản phẩm -->
+    <div id="checkout-items" style="max-height: 300px; overflow-y: auto; margin: 15px 0;"></div>
+    
+    <!-- Tổng tiền và voucher -->
+    <div id="checkout-total" style="margin: 15px 0;"></div>
+    
+    <!-- Thông tin khách hàng -->
+    <div style="margin: 15px 0;">
+      <input type="text" id="customer-name" placeholder="Họ tên khách hàng" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+      <input type="tel" id="customer-phone" placeholder="Số điện thoại" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+      <input type="text" id="customer-address" placeholder="Địa chỉ nhận hàng" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box;">
+    </div>
+    
+    <!-- Phương thức thanh toán -->
+    <div style="margin-bottom: 15px;">
+      <label style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px; cursor: pointer;">
+        <input type="radio" name="payment" value="cod" checked onclick="toggleQR(false)"> 
+        <span>💵 Thanh toán khi nhận hàng (COD)</span>
+      </label>
+      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
+        <input type="radio" name="payment" value="bank" onclick="toggleQR(true)"> 
+        <span>💳 Chuyển khoản ngân hàng (QR Code)</span>
+      </label>
+    </div>
+    
+    <!-- QR Code -->
+    <div id="qr-container" style="display: none; text-align: center; background: #f9f9f9; padding: 15px; border-radius: 12px; margin-bottom: 15px;">
+      <p style="margin-bottom: 10px;">📱 Quét mã để thanh toán:</p>
+      <img src="./image/qr.jpg" alt="QR Code" id="qr-image" style="width: 140px; height: 140px; border-radius: 10px;" onerror="this.src='https://via.placeholder.com/140?text=QR+Code'">
+      <p style="margin-top: 10px;"><strong>STK: 0123456789 - Techcombank</strong></p>
+    </div>
+    
+    <!-- Nút xác nhận -->
+    <button onclick="confirmOrder()" style="width: 100%; padding: 12px; background: #4b2e2b; color: white; border: none; border-radius: 30px; font-weight: bold; cursor: pointer; font-size: 16px;">
+      ✅ Xác nhận đặt hàng
+    </button>
+  </div>
+</div>
+
+<!-- POPUP THÀNH CÔNG -->
+<div id="success-popup" class="popup" onclick="closeSuccessPopupOnOutside(event)">
+  <div class="popup-content" onclick="event.stopPropagation()">
+    <div class="success-icon">
+      <i class="fa-regular fa-circle-check"></i>
+    </div>
+    <h2>🎉 Đặt hàng thành công!</h2>
+    <div class="order-info">
+      <p><i class="fa-regular fa-user"></i> Người nhận: <strong id="display-name">...</strong></p>
+      <p><i class="fa-regular fa-phone"></i> SĐT: <strong id="display-phone">...</strong></p>
+      <p><i class="fa-regular fa-location-dot"></i> Địa chỉ: <strong id="display-address">...</strong></p>
+      <p><i class="fa-regular fa-clock"></i> Trạng thái: <strong>Đang chuẩn bị hàng</strong></p>
+    </div>
+    <div class="countdown">
+      🔄 Cửa sổ tự đóng sau <span id="countdown-timer">10</span> giây
+    </div>
+    <button onclick="closeSuccessPopup()">
+      <i class="fa-solid fa-cart-shopping"></i> Tiếp tục mua sắm
+    </button>
+  </div>
+</div>
+
+   <!-- NÚT HOTLINE VỚI POPUP XÁC NHẬN -->
+<a href="javascript:void(0)" class="nut-hotline">
+  <img
+    src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png"
+    alt="Hotline"
+    width="28"
+    style="filter: brightness(0) invert(1)"
+  />
+</a>
+
+<!-- POPUP HOTLINE XÁC NHẬN -->
+<div id="hotline-popup" class="hotline-popup">
+  <h4>📞 Liên hệ Nbreak</h4>
+  <p>Bạn có muốn gọi đến số hotline?</p>
+  <div class="hotline-buttons">
+    <button class="hotline-call" onclick="makeCall()">📞 Gọi ngay</button>
+    <button class="hotline-cancel" onclick="closeHotlinePopup()">✕ Quay lại</button>
+  </div>
+</div>
+
+    <a href="https://zalo.me/0123456789" target="_blank" class="nut-zalo">
+      Zalo
+    </a>
+
+    <a href="https://m.me/YOUR_PAGE_ID" target="_blank" class="nut-messenger">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg"
+        alt="Messenger"
+        width="30"
+      />
+    </a>
+
+    <div
+      id="toast-container"
+      style="position: fixed; top: 20px; right: 20px; z-index: 10000"
+    ></div>
+
+    <!-- POPUP CHI TIẾT SẢN PHẨM -->
+    <div id="product-detail-popup" class="product-detail-popup">
+      <div class="product-detail-content">
+        <span class="product-detail-close" onclick="closeProductDetail()"
+          >&times;</span
+        >
+        <div class="product-detail-inner">
+          <div class="product-detail-image">
+            <img id="detail-product-img" src="" alt="Product image" />
+          </div>
+          <div class="product-detail-info">
+            <h2 id="detail-product-name">Tên sản phẩm</h2>
+            <div class="product-detail-price">
+              <span id="detail-product-price">0</span>đ
+            </div>
+            <div class="product-detail-desc" id="detail-product-desc">
+              Mô tả sản phẩm sẽ hiển thị tại đây...
+            </div>
+
+            <!-- Số lượng -->
+            <div class="quantity-selector">
+              <label>Số lượng:</label>
+              <div class="quantity-control">
+                <button onclick="decreaseDetailQty()">-</button>
+                <span id="detail-quantity">1</span>
+                <button onclick="increaseDetailQty()">+</button>
+              </div>
+            </div>
+
+            <!-- Nút thêm vào giỏ -->
+            <button class="add-to-cart-detail" onclick="addDetailToCart()">
+              🛒 Thêm vào giỏ hàng
+            </button>
+          </div>
+        </div>
+
+        <!-- Gợi ý sản phẩm tương tự -->
+        <div class="suggested-products">
+          <h4>✨ Có thể bạn cũng thích</h4>
+          <div id="suggested-grid" class="suggested-grid">
+            <!-- Sản phẩm gợi ý sẽ được thêm bằng JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+<!-- POPUP THÔNG TIN CÁ NHÂN -->
+<div id="profile-popup" class="popup">
+  <div class="popup-content">
+    <span class="close" onclick="closeProfilePopup()" style="float: right; font-size: 28px; cursor: pointer; color: #999;">&times;</span>
+    <h2 style="color: #4b2e2b; text-align: center; margin-bottom: 20px;">
+      <i class="fa-solid fa-user-circle"></i> Thông tin cá nhân
+    </h2>
+    
+    <div style="text-align: left;">
+      <label><i class="fa-solid fa-user"></i> Họ và tên:</label>
+      <input type="text" id="profile-name" placeholder="Họ tên của bạn">
+      
+      <label><i class="fa-solid fa-envelope"></i> Email:</label>
+      <input type="email" id="profile-email" readonly style="background: #f5f5f5;">
+      
+      <label><i class="fa-solid fa-phone"></i> Số điện thoại:</label>
+      <input type="tel" id="profile-phone" placeholder="Số điện thoại">
+      
+      <label><i class="fa-solid fa-location-dot"></i> Địa chỉ:</label>
+      <input type="text" id="profile-address" placeholder="Địa chỉ của bạn">
+    </div>
+    
+    <div style="display: flex; gap: 15px; margin-top: 25px; justify-content: center;">
+      <button onclick="closeProfilePopup()" style="background: #999; color: white; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold;">Đóng</button>
+      <button onclick="saveProfile()" style="background: #4b2e2b; color: white; border: none; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold;">Lưu thay đổi</button>
+    </div>
+  </div>
+</div>
+       <script src="thong_bao.js"></script>
+<script src="account.js"></script>
+<script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu - Nbreak</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="thong_bao.css" />
+    <link rel="stylesheet" href="account.css" />
+    <link rel="stylesheet" href="history.css" />
+    <link rel="stylesheet" href="uu_dai.css" />
+    <link rel="stylesheet" href="menu.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/jpg" href="image/logo.jpg" />
+  </head>
+  <body>
+    <header>
+      <div class="header-khung">
+        <a href="trang_chu.html" class="logo">
+          <img src="image/logo.jpg" alt="Logo Nbreak" class="logo-vong" />
+          <div class="logo-text">Nbreak</div>
+        </a>
+
+        <div class="timkiem">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Tìm món bạn muốn..."
+            onkeypress="handleSearch(event)"
+          />
+          <i
+            class="fa-solid fa-magnifying-glass search-icon"
+            onclick="performSearch()"
+          ></i>
+        </div>
+
+        <div class="nut-dieu-huong">
+          <div class="nav-item-box dropdown">
+            <a
+              href="javascript:void(0)"
+              class="nav-link-main"
+              style="color: #c8a27c"
+            >
+              <i class="fa-solid fa-clipboard-list nav-icon"></i>
+              <span class="nav-text"
+                >Menu <i class="fa-solid fa-chevron-down"></i
+              ></span>
+            </a>
+            <ul class="dropdown-content">
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('coffee')"
+                  >Coffee</a
+                >
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('sinhto')"
+                  >Sinh tố</a
+                >
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('trasua')"
+                  >Trà sữa</a
+                >
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('nuocep')"
+                  >Nước ép</a
+                >
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('travi')"
+                  >Trà vị</a
+                >
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('doanvat')"
+                  >Đồ ăn vặt</a
+                >
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('banhngot')"
+                  >Bánh ngọt</a
+                >
+              </li>
+              <li>
+                <a
+                  href="javascript:void(0)"
+                  onclick="goToCategory('combodoanvat')"
+                  >Combo đồ ăn vặt</a
+                >
+              </li>
+              <li>
+                <a
+                  href="javascript:void(0)"
+                  onclick="goToCategory('combodouong')"
+                  >Combo đồ uống</a
+                >
+              </li>
+              <li>
+                <a href="javascript:void(0)" onclick="goToCategory('combo')"
+                  >Combo</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <a href="uu_dai.html" class="nav-item-box">
+            <i class="fa-solid fa-tags nav-icon"></i>
+            <span class="nav-text">Ưu đãi</span>
+          </a>
+
+          <a href="lien_he.html" class="nav-item-box">
+            <i class="fa-solid fa-phone-flip nav-icon"></i>
+            <span class="nav-text">Liên hệ</span>
+          </a>
+
+          <a href="gioi_thieu.html" class="nav-item-box">
+            <i class="fa-solid fa-circle-info nav-icon"></i>
+            <span class="nav-text">Giới thiệu</span>
+          </a>
+
+          <a
+            href="javascript:void(0)"
+            onclick="openCheckout()"
+            class="nav-item-box cart-icon-fix"
+          >
+            <div class="icon-badge-container">
+              <span id="cart-count">0</span>
+              <i class="fa-solid fa-cart-shopping nav-icon"></i>
+            </div>
+            <span class="nav-text">Giỏ hàng</span>
+          </a>
+
+          <!-- MỤC THÔNG BÁO -->
+          <div class="nav-item-box" onclick="openNotifications()">
+            <div class="icon-badge-container">
+              <span
+                id="notification-badge"
+                class="notification-badge"
+                style="display: none"
+                >0</span
+              >
+              <i class="fa-solid fa-bell nav-icon"></i>
+            </div>
+            <span class="nav-text">Thông báo</span>
+          </div>
+
+          <!-- NÚT TÀI KHOẢN -->
+  <div class="nav-item-box" id="account-btn" onclick="toggleAccountMenu()">
+    <div class="icon-badge-container">
+      <i class="fa-solid fa-user nav-icon"></i>
+    </div>
+    <span class="nav-text" id="account-text">Tài khoản</span>
+
+  <!-- DROPDOWN TÀI KHOẢN -->
+<div id="account-dropdown" class="account-dropdown">
+  <div class="account-header">
+    <i class="fa-solid fa-circle-user"></i>
+    <div>
+      <div id="dropdown-username">Khách hàng</div>
+      <div id="dropdown-email">Chưa đăng nhập</div>
+    </div>
+  </div>
+  <div class="dropdown-divider"></div>
+  <a href="javascript:void(0)" onclick="openProfile()">
+    <i class="fa-solid fa-id-card"></i> Thông tin cá nhân
+  </a>
+  <a href="javascript:void(0)" onclick="openOrderHistory()">
+    <i class="fa-solid fa-clock-rotate-left"></i> Đơn mua
+  </a>
+  <div class="dropdown-divider"></div>
+  <a href="javascript:void(0)" id="login-logout-btn" onclick="openAuthModal()">
+    <i class="fa-solid fa-right-to-bracket"></i> <span id="login-logout-text">Đăng nhập</span>
+  </a>
+</div>
+        </div>
+      </div>
+    </header>
+    
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="menu-page">
+      <div class="menu-header">
+        <h1>📋 Menu Nbreak</h1>
+        <p>Khám phá những thức uống và món ăn hấp dẫn tại Nbreak</p>
+      </div>
+
+      <!-- Coffee -->
+      <div id="coffee" class="menu-category">
+        <h2>☕ Coffee</h2>
+        <div class="menu-category-grid" id="coffee-grid"></div>
+      </div>
+
+      <!-- Sinh tố -->
+      <div id="sinhto" class="menu-category">
+        <h2>🥤 Sinh tố</h2>
+        <div class="menu-category-grid" id="sinhto-grid"></div>
+      </div>
+
+      <!-- Trà sữa -->
+      <div id="trasua" class="menu-category">
+        <h2>🧋 Trà sữa</h2>
+        <div class="menu-category-grid" id="trasua-grid"></div>
+      </div>
+
+      <!-- Nước ép -->
+      <div id="nuocep" class="menu-category">
+        <h2>🍹 Nước ép</h2>
+        <div class="menu-category-grid" id="nuocep-grid"></div>
+      </div>
+
+      <!-- Trà vị -->
+      <div id="travi" class="menu-category">
+        <h2>🍵 Trà vị</h2>
+        <div class="menu-category-grid" id="travi-grid"></div>
+      </div>
+
+      <!-- Đồ ăn vặt -->
+      <div id="doanvat" class="menu-category">
+        <h2>🍟 Đồ ăn vặt</h2>
+        <div class="menu-category-grid" id="doanvat-grid"></div>
+      </div>
+
+      <!-- Bánh ngọt -->
+      <div id="banhngot" class="menu-category">
+        <h2>🍰 Bánh ngọt</h2>
+        <div class="menu-category-grid" id="banhngot-grid"></div>
+      </div>
+
+      <!-- Combo đồ ăn vặt -->
+      <div id="combodoanvat" class="menu-category">
+        <h2>🍱 Combo đồ ăn vặt</h2>
+        <div class="menu-category-grid" id="combodoanvat-grid"></div>
+      </div>
+
+      <!-- Combo đồ uống -->
+      <div id="combodouong" class="menu-category">
+        <h2>🥤 Combo đồ uống</h2>
+        <div class="menu-category-grid" id="combodouong-grid"></div>
+      </div>
+
+      <!-- Combo -->
+      <div id="combo" class="menu-category">
+        <h2>🎁 Combo</h2>
+        <div class="menu-category-grid" id="combo-grid"></div>
+      </div>
+
+      <div style="text-align: center">
+        <a href="trang_chu.html" class="back-to-home">← Quay lại trang chủ</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-left">
+          <h3>☕ Nbreak</h3>
+          <p>Chất lượng – Đậm vị – Tinh tế</p>
+        </div>
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <p>
+            📧 Email: <a href="mailto:contact@nbreak.com">contact@nbreak.com</a>
+          </p>
+          <p>☎️ Điện thoại: 0338 909 486</p>
+          <p>🏫 Địa chỉ: 207 Giải Phóng, Phường Bạch Mai, Hà Nội</p>
+        </div>
+        <div class="footer-social">
+          <h4>Theo dõi chúng tôi</h4>
+          <p>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Zalo</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p><b>© 2026 Nbreak | NHÓM 11 – THIẾT KẾ WEB</b></p>
+      </div>
+    </footer>
+
+    <!-- POPUP CHECKOUT -->
+    <div id="checkout-popup" class="popup">
+      <div class="popup-content">
+        <span
+          class="close"
+          onclick="closeCheckout()"
+          style="float: right; font-size: 24px; cursor: pointer"
+          >&times;</span
+        >
+        <h2>Xác nhận đơn hàng</h2>
+        <hr />
+        <div id="checkout-items" style="text-align: left; margin: 20px 0"></div>
+        <h3 id="checkout-total" style="color: #ff7a00"></h3>
+        <div
+          id="checkout-form-info"
+          style="text-align: left; margin-bottom: 20px"
+        >
+          <label>Họ tên khách hàng:</label>
+          <input
+            type="text"
+            id="customer-name"
+            placeholder="Nhập tên của bạn"
+            style="width: 100%; padding: 8px; margin: 5px 0 10px"
+          />
+          <label>Số điện thoại:</label>
+          <input
+            type="tel"
+            id="customer-phone"
+            placeholder="Nhập số điện thoại"
+            style="width: 100%; padding: 8px; margin: 5px 0 10px"
+          />
+          <label>Địa chỉ nhận hàng:</label>
+          <input
+            type="text"
+            id="customer-address"
+            placeholder="Số nhà, tên đường, phường/xã..."
+            style="width: 100%; padding: 8px; margin: 5px 0 10px"
+          />
+        </div>
+        <h4>Phương thức thanh toán</h4>
+        <div
+          class="payment-methods"
+          style="text-align: left; margin-bottom: 20px"
+        >
+          <label style="display: block; margin-bottom: 10px; cursor: pointer">
+            <input
+              type="radio"
+              name="payment"
+              value="cod"
+              checked
+              onclick="toggleQR(false)"
+            />
+            💵 Thanh toán khi nhận hàng (COD)
+          </label>
+          <label style="display: block; margin-bottom: 10px; cursor: pointer">
+            <input
+              type="radio"
+              name="payment"
+              value="bank"
+              onclick="toggleQR(true)"
+            />
+            💳 Chuyển khoản ngân hàng (QR Code)
+          </label>
+        </div>
+        <div
+          id="qr-container"
+          style="
+            display: none;
+            text-align: center;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px dashed #ccc;
+          "
+        >
+          <p style="font-size: 14px; margin-bottom: 10px">
+            Quét mã để thanh toán đơn hàng:
+          </p>
+          <img
+            src=""
+            alt="QR Code"
+            id="qr-image"
+            style="
+              width: 150px;
+              height: 150px;
+              border: 5px solid white;
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            "
+          />
+          <p style="font-weight: bold; color: #4b2e2e; margin-top: 10px">
+            STK: 0123456789 - Techcombank
+          </p>
+        </div>
+        <button
+          onclick="confirmOrder()"
+          class="checkout-btn"
+          style="width: 100%; margin-top: 10px"
+        >
+          Xác nhận đặt hàng
+        </button>
+      </div>
+    </div>
+
+    <!-- POPUP THÀNH CÔNG -->
+    <div
+      id="success-popup"
+      class="popup"
+      onclick="closeSuccessPopupOnOutside(event)"
+    >
+      <div
+        class="popup-content"
+        onclick="event.stopPropagation()"
+        style="text-align: center; line-height: 1.6"
+      >
+        <h2 style="color: #27ae60">🎉 Đặt hàng thành công!</h2>
+        <div
+          style="
+            background: #fdf2e9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border: 1px solid #ff7a00;
+            text-align: left;
+          "
+        >
+          <p>Người nhận: <strong id="display-name">...</strong></p>
+          <p>SĐT: <strong id="display-phone">...</strong></p>
+          <p>Địa chỉ: <strong id="display-address">...</strong></p>
+          <p>Trạng thái: <strong>Đang chuẩn bị hàng</strong></p>
+        </div>
+        <p>
+          Cửa sổ đóng sau
+          <span id="countdown-timer" style="font-weight: bold; color: red"
+            >10</span
+          >
+          giây.
+        </p>
+        <button
+          onclick="closeSuccessPopup()"
+          style="
+            background: #4b2e2e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          Tiếp tục mua sắm
+        </button>
+      </div>
+    </div>
+
+    <!-- POPUP CHI TIẾT SẢN PHẨM -->
+    <div id="product-detail-popup" class="product-detail-popup">
+      <div class="product-detail-content">
+        <span class="product-detail-close" onclick="closeProductDetail()"
+          >&times;</span
+        >
+        <div class="product-detail-inner">
+          <div class="product-detail-image">
+            <img id="detail-product-img" src="" alt="Product image" />
+          </div>
+          <div class="product-detail-info">
+            <h2 id="detail-product-name">Tên sản phẩm</h2>
+            <div class="product-detail-price">
+              <span id="detail-product-price">0</span>đ
+            </div>
+            <div class="product-detail-desc" id="detail-product-desc">
+              Mô tả sản phẩm...
+            </div>
+            <div class="quantity-selector">
+              <label>Số lượng:</label>
+              <div class="quantity-control">
+                <button onclick="decreaseDetailQty()">-</button>
+                <span id="detail-quantity">1</span>
+                <button onclick="increaseDetailQty()">+</button>
+              </div>
+            </div>
+            <button class="add-to-cart-detail" onclick="addDetailToCart()">
+              🛒 Thêm vào giỏ hàng
+            </button>
+          </div>
+        </div>
+        <div class="suggested-products">
+          <h4>✨ Có thể bạn cũng thích</h4>
+          <div id="suggested-grid" class="suggested-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nút liên hệ nổi -->
+    <a href="tel:0123456789" class="nut-hotline">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png"
+        alt="Hotline"
+        width="30"
+        style="filter: brightness(0) invert(1)"
+      />
+    </a>
+    <a href="https://zalo.me/0123456789" target="_blank" class="nut-zalo"
+      >Zalo</a
+    >
+    <a href="https://m.me/YOUR_PAGE_ID" target="_blank" class="nut-messenger">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg"
+        alt="Messenger"
+        width="30"
+      />
+    </a>
+
+    <div
+      id="toast-container"
+      style="position: fixed; top: 20px; right: 20px; z-index: 10000"
+    ></div>
+
+    <!-- Scripts -->
+    <script src="thong_bao.js"></script>
+    <script src="account.js"></script>
+    <script src="voucher.js"></script>
+    <script src="script.js"></script>
+    <script src="menu.js"></script>
+  </body>
+</html>

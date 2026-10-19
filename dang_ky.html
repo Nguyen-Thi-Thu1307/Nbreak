@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng ký / Đăng nhập - Nbreak</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="thong_bao.css" />
+    <link rel="stylesheet" href="account.css" />
+    <link rel="stylesheet" href="history.css" />
+    <link rel="stylesheet" href="uu_dai.css" />
+    <link rel="stylesheet" href="menu.css" />
+    <link rel="icon" type="image/jpg" href="image/logo.jpg" />
+    <style>
+      /* Auth page specific styles */
+      .auth-page {
+        min-height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 60px 20px;
+        background: linear-gradient(135deg, #fef9f0 0%, #f5e6d8 100%);
+      }
+
+      .auth-card {
+        background: white;
+        border-radius: 32px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        width: 100%;
+        max-width: 480px;
+        overflow: hidden;
+        animation: fadeInUp 0.5s ease;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .auth-header {
+        background: linear-gradient(135deg, #4b2e2b, #6f4e37);
+        padding: 30px;
+        text-align: center;
+        color: white;
+      }
+
+      .auth-header i {
+        font-size: 60px;
+        margin-bottom: 15px;
+      }
+
+      .auth-header h1 {
+        margin: 0;
+        font-size: 28px;
+      }
+
+      .auth-header p {
+        margin: 8px 0 0;
+        opacity: 0.8;
+        font-size: 14px;
+      }
+
+      .auth-tabs {
+        display: flex;
+        border-bottom: 1px solid #eee;
+      }
+
+      .auth-tab {
+        flex: 1;
+        padding: 16px;
+        text-align: center;
+        background: none;
+        border: none;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        color: #666;
+        transition: all 0.3s;
+      }
+
+      .auth-tab.active {
+        color: #c8a27c;
+        border-bottom: 3px solid #c8a27c;
+      }
+
+      .auth-tab:hover {
+        background: #f5f0eb;
+      }
+
+      .auth-form {
+        padding: 30px;
+        display: none;
+      }
+
+      .auth-form.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #4b2e2b;
+        font-size: 14px;
+      }
+
+      .form-group label i {
+        width: 20px;
+        color: #c8a27c;
+        margin-right: 8px;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        font-size: 15px;
+        transition: all 0.3s;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: #c8a27c;
+        box-shadow: 0 0 0 3px rgba(200, 162, 124, 0.2);
+      }
+
+      .auth-btn {
+        width: 100%;
+        padding: 14px;
+        background: #4b2e2b;
+        color: white;
+        border: none;
+        border-radius: 40px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin-top: 10px;
+      }
+
+      .auth-btn:hover {
+        background: #6f4e37;
+        transform: translateY(-2px);
+      }
+
+      .auth-footer {
+        text-align: center;
+        margin-top: 25px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+        font-size: 14px;
+        color: #666;
+      }
+
+      .auth-footer a {
+        color: #c8a27c;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .auth-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .back-home {
+        display: inline-block;
+        margin-top: 20px;
+        text-align: center;
+        width: 100%;
+        color: #999;
+        text-decoration: none;
+        font-size: 13px;
+      }
+
+      .back-home:hover {
+        color: #c8a27c;
+      }
+
+      .error-message {
+        color: #e74c3c;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+      }
+
+      .success-message {
+        color: #27ae60;
+        font-size: 12px;
+        margin-top: 5px;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-khung">
+        <a href="trang_chu.html" class="logo">
+          <img src="image/logo.jpg" alt="Logo Nbreak" class="logo-vong" />
+          <div class="logo-text">Nbreak</div>
+        </a>
+
+        <div class="timkiem">
+          <input
+            type="text"
+            id="search-input"
+            placeholder="Nhập sản phẩm bạn muốn tìm..."
+            onkeypress="handleSearch(event)"
+          />
+          <i
+            class="fa-solid fa-magnifying-glass search-icon"
+            onclick="performSearch()"
+          ></i>
+        </div>
+
+        <div class="nut-dieu-huong">
+          <div class="nav-item-box dropdown">
+            <a href="menu.html" class="nav-link-main" style="color: #c8a27c">
+              <i class="fa-solid fa-clipboard-list nav-icon"></i>
+              <span class="nav-text"
+                >Menu <i class="fa-solid fa-chevron-down"></i
+              ></span>
+            </a>
+            <ul class="dropdown-content">
+              <li><a href="menu.html#coffee">Coffee</a></li>
+              <li><a href="menu.html#sinhto">Sinh tố</a></li>
+              <li><a href="menu.html#trasua">Trà sữa</a></li>
+              <li><a href="menu.html#nuocep">Nước ép</a></li>
+              <li><a href="menu.html#travi">Trà vị</a></li>
+              <li><a href="menu.html#doanvat">Đồ ăn vặt</a></li>
+              <li><a href="menu.html#banhngot">Bánh ngọt</a></li>
+              <li><a href="menu.html#combodoanvat">Combo đồ ăn vặt</a></li>
+              <li><a href="menu.html#combodouong">Combo đồ uống</a></li>
+              <li><a href="menu.html#combo">Combo</a></li>
+            </ul>
+          </div>
+          <a href="uu_dai.html" class="nav-item-box">
+            <i class="fa-solid fa-tags nav-icon"></i>
+            <span class="nav-text">Ưu đãi</span>
+          </a>
+          <a href="lien_he.html" class="nav-item-box">
+            <i class="fa-solid fa-phone-flip nav-icon"></i>
+            <span class="nav-text">Liên hệ</span>
+          </a>
+          <a href="gioi_thieu.html" class="nav-item-box">
+            <i class="fa-solid fa-circle-info nav-icon"></i>
+            <span class="nav-text">Giới thiệu</span>
+          </a>
+          <a
+            href="javascript:void(0)"
+            onclick="openCheckout()"
+            class="nav-item-box cart-icon-fix"
+          >
+            <div class="icon-badge-container">
+              <span id="cart-count">0</span>
+              <i class="fa-solid fa-cart-shopping nav-icon"></i>
+            </div>
+            <span class="nav-text">Giỏ hàng</span>
+          </a>
+          <div class="nav-item-box" onclick="openNotifications()">
+            <div class="icon-badge-container">
+              <span
+                id="notification-badge"
+                class="notification-badge"
+                style="display: none"
+                >0</span
+              >
+              <i class="fa-solid fa-bell nav-icon"></i>
+            </div>
+            <span class="nav-text">Thông báo</span>
+          </div>
+          <div
+            class="nav-item-box"
+            id="account-btn"
+            onclick="toggleAccountMenu()"
+          >
+            <div class="icon-badge-container">
+              <i class="fa-solid fa-user nav-icon"></i>
+            </div>
+            <span class="nav-text" id="account-text">Tài khoản</span>
+            <div id="account-dropdown" class="account-dropdown">
+              <div class="account-header">
+                <i class="fa-solid fa-circle-user"></i>
+                <div>
+                  <div id="dropdown-username">Khách hàng</div>
+                  <div id="dropdown-email">Chưa đăng nhập</div>
+                </div>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="javascript:void(0)" onclick="openProfile()">
+                <i class="fa-solid fa-id-card"></i> Thông tin cá nhân
+              </a>
+              <a href="javascript:void(0)" onclick="openOrderHistory()">
+                <i class="fa-solid fa-clock-rotate-left"></i> Đơn mua
+              </a>
+              <div class="dropdown-divider"></div>
+              <a
+                href="javascript:void(0)"
+                id="login-logout-btn"
+                onclick="handleAuthClick()"
+              >
+                <i class="fa-solid fa-right-to-bracket"></i>
+                <span id="login-logout-text">Đăng nhập</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- NỘI DUNG CHÍNH - FORM ĐĂNG NHẬP/ĐĂNG KÝ -->
+    <div class="auth-page">
+      <div class="auth-card">
+        <div class="auth-header">
+          <i class="fa-solid fa-mug-hot"></i>
+          <h1>Nbreak</h1>
+          <p>Đăng nhập để trải nghiệm dịch vụ tốt nhất</p>
+        </div>
+
+        <div class="auth-tabs">
+          <button class="auth-tab active" data-tab="login">
+            <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+          </button>
+          <button class="auth-tab" data-tab="register">
+            <i class="fa-solid fa-user-plus"></i> Đăng ký
+          </button>
+        </div>
+
+        <!-- FORM ĐĂNG NHẬP -->
+        <div id="loginForm" class="auth-form active">
+          <form
+            onsubmit="
+              event.preventDefault();
+              doLogin();
+            "
+          >
+            <div class="form-group">
+              <label><i class="fa-solid fa-envelope"></i> Email</label>
+              <input
+                type="email"
+                id="login-email"
+                placeholder="Nhập email của bạn"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-lock"></i> Mật khẩu</label>
+              <input
+                type="password"
+                id="login-password"
+                placeholder="Nhập mật khẩu"
+                required
+              />
+            </div>
+            <button type="submit" class="auth-btn">
+              <i class="fa-solid fa-right-to-bracket"></i> Đăng nhập
+            </button>
+          </form>
+          <div class="auth-footer">
+            Chưa có tài khoản?
+            <a href="javascript:void(0)" onclick="switchToRegister()"
+              >Đăng ký ngay</a
+            >
+          </div>
+        </div>
+
+        <!-- FORM ĐĂNG KÝ -->
+        <div id="registerForm" class="auth-form">
+          <form
+            onsubmit="
+              event.preventDefault();
+              doRegister();
+            "
+          >
+            <div class="form-group">
+              <label><i class="fa-solid fa-user"></i> Họ và tên</label>
+              <input
+                type="text"
+                id="register-name"
+                placeholder="Nhập họ tên của bạn"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-envelope"></i> Email</label>
+              <input
+                type="email"
+                id="register-email"
+                placeholder="Nhập email của bạn"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-phone"></i> Số điện thoại</label>
+              <input
+                type="tel"
+                id="register-phone"
+                placeholder="Nhập số điện thoại"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-lock"></i> Mật khẩu</label>
+              <input
+                type="password"
+                id="register-password"
+                placeholder="Nhập mật khẩu"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label><i class="fa-solid fa-lock"></i> Xác nhận mật khẩu</label>
+              <input
+                type="password"
+                id="register-confirm"
+                placeholder="Nhập lại mật khẩu"
+                required
+              />
+            </div>
+            <button type="submit" class="auth-btn">
+              <i class="fa-solid fa-user-plus"></i> Đăng ký
+            </button>
+          </form>
+          <div class="auth-footer">
+            Đã có tài khoản?
+            <a href="javascript:void(0)" onclick="switchToLogin()"
+              >Đăng nhập ngay</a
+            >
+          </div>
+        </div>
+
+        <a href="trang_chu.html" class="back-home">
+          <i class="fa-solid fa-arrow-left"></i> Quay lại trang chủ
+        </a>
+      </div>
+    </div>
+
+    <!-- POPUP CHECKOUT -->
+    <div id="checkout-popup" class="popup">
+      <div class="popup-content" style="max-width: 500px">
+        <span
+          class="close"
+          onclick="closeCheckout()"
+          style="float: right; font-size: 28px; cursor: pointer"
+          >&times;</span
+        >
+        <h2 style="color: #4b2e2b">🛒 Xác nhận đơn hàng</h2>
+        <hr />
+        <div
+          id="checkout-items"
+          style="max-height: 300px; overflow-y: auto; margin: 15px 0"
+        ></div>
+        <div id="checkout-total" style="margin: 15px 0"></div>
+        <div style="margin: 15px 0">
+          <input
+            type="text"
+            id="customer-name"
+            placeholder="Họ tên khách hàng"
+            style="
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 10px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+            "
+          />
+          <input
+            type="tel"
+            id="customer-phone"
+            placeholder="Số điện thoại"
+            style="
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 10px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+            "
+          />
+          <input
+            type="text"
+            id="customer-address"
+            placeholder="Địa chỉ nhận hàng"
+            style="
+              width: 100%;
+              padding: 10px;
+              margin-bottom: 10px;
+              border: 1px solid #ddd;
+              border-radius: 8px;
+            "
+          />
+        </div>
+        <div style="margin-bottom: 15px">
+          <label style="display: block; margin-bottom: 10px">
+            <input
+              type="radio"
+              name="payment"
+              value="cod"
+              checked
+              onclick="toggleQR(false)"
+            />
+            💵 Thanh toán khi nhận hàng
+          </label>
+          <label style="display: block">
+            <input
+              type="radio"
+              name="payment"
+              value="bank"
+              onclick="toggleQR(true)"
+            />
+            💳 Chuyển khoản ngân hàng
+          </label>
+        </div>
+        <div
+          id="qr-container"
+          style="
+            display: none;
+            text-align: center;
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 12px;
+          "
+        >
+          <img
+            src="./image/qr.jpg"
+            id="qr-image"
+            style="width: 140px; border-radius: 10px"
+          />
+          <p><strong>STK: 0123456789 - Techcombank</strong></p>
+        </div>
+        <button
+          onclick="confirmOrder()"
+          style="
+            width: 100%;
+            padding: 12px;
+            background: #4b2e2b;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: bold;
+          "
+        >
+          ✅ Xác nhận đặt hàng
+        </button>
+      </div>
+    </div>
+
+    <!-- POPUP THÀNH CÔNG -->
+    <div
+      id="success-popup"
+      class="popup"
+      onclick="closeSuccessPopupOnOutside(event)"
+    >
+      <div
+        class="popup-content"
+        onclick="event.stopPropagation()"
+        style="text-align: center"
+      >
+        <div class="success-icon">
+          <i class="fa-regular fa-circle-check"></i>
+        </div>
+        <h2>🎉 Đặt hàng thành công!</h2>
+        <div class="order-info">
+          <p>
+            <i class="fa-regular fa-user"></i> Người nhận:
+            <strong id="display-name">...</strong>
+          </p>
+          <p>
+            <i class="fa-regular fa-phone"></i> SĐT:
+            <strong id="display-phone">...</strong>
+          </p>
+          <p>
+            <i class="fa-regular fa-location-dot"></i> Địa chỉ:
+            <strong id="display-address">...</strong>
+          </p>
+        </div>
+        <div class="countdown">
+          🔄 Đóng sau <span id="countdown-timer">10</span> giây
+        </div>
+        <button onclick="closeSuccessPopup()">
+          <i class="fa-solid fa-cart-shopping"></i> Tiếp tục mua sắm
+        </button>
+      </div>
+    </div>
+
+    <!-- POPUP THÔNG TIN CÁ NHÂN -->
+    <div id="profile-popup" class="popup">
+      <div class="popup-content">
+        <span
+          class="close"
+          onclick="closeProfilePopup()"
+          style="float: right; font-size: 28px; cursor: pointer"
+          >&times;</span
+        >
+        <h2 style="color: #4b2e2b; text-align: center">
+          <i class="fa-solid fa-user-circle"></i> Thông tin cá nhân
+        </h2>
+        <div style="text-align: left">
+          <label><i class="fa-solid fa-user"></i> Họ và tên:</label>
+          <input type="text" id="profile-name" placeholder="Họ tên của bạn" />
+          <label><i class="fa-solid fa-envelope"></i> Email:</label>
+          <input
+            type="email"
+            id="profile-email"
+            readonly
+            style="background: #f5f5f5"
+          />
+          <label><i class="fa-solid fa-phone"></i> Số điện thoại:</label>
+          <input type="tel" id="profile-phone" placeholder="Số điện thoại" />
+          <label><i class="fa-solid fa-location-dot"></i> Địa chỉ:</label>
+          <input
+            type="text"
+            id="profile-address"
+            placeholder="Địa chỉ của bạn"
+          />
+        </div>
+        <div
+          style="
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+            justify-content: center;
+          "
+        >
+          <button
+            onclick="closeProfilePopup()"
+            style="
+              background: #999;
+              color: white;
+              border: none;
+              padding: 10px 25px;
+              border-radius: 30px;
+              cursor: pointer;
+            "
+          >
+            Đóng
+          </button>
+          <button
+            onclick="saveProfile()"
+            style="
+              background: #4b2e2b;
+              color: white;
+              border: none;
+              padding: 10px 25px;
+              border-radius: 30px;
+              cursor: pointer;
+            "
+          >
+            Lưu thay đổi
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nút liên hệ nổi -->
+    <a
+      href="javascript:void(0)"
+      class="nut-hotline"
+      onclick="openHotlinePopup(event)"
+    >
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/6/6c/Phone_icon.png"
+        alt="Hotline"
+        width="28"
+        style="filter: brightness(0) invert(1)"
+      />
+    </a>
+    <div id="hotline-popup" class="hotline-popup">
+      <h4>📞 Liên hệ Nbreak</h4>
+      <p>Bạn có muốn gọi đến số hotline?</p>
+      <div class="hotline-buttons">
+        <button class="hotline-call" onclick="makeCall()">📞 Gọi ngay</button>
+        <button class="hotline-cancel" onclick="closeHotlinePopup()">
+          ✕ Quay lại
+        </button>
+      </div>
+    </div>
+    <a href="https://zalo.me/0123456789" target="_blank" class="nut-zalo"
+      >Zalo</a
+    >
+    <a href="https://m.me/YOUR_PAGE_ID" target="_blank" class="nut-messenger">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/b/be/Facebook_Messenger_logo_2020.svg"
+        alt="Messenger"
+        width="28"
+      />
+    </a>
+
+    <div
+      id="toast-container"
+      style="position: fixed; top: 20px; right: 20px; z-index: 10000"
+    ></div>
+
+    <footer>
+      <div class="footer-container">
+        <div class="footer-left">
+          <h3>☕ Nbreak</h3>
+          <p>Chất lượng – Đậm vị – Tinh tế</p>
+        </div>
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <p>
+            📧 Email: <a href="mailto:contact@nbreak.com">contact@nbreak.com</a>
+          </p>
+          <p>☎️ Điện thoại: 0338 909 486</p>
+          <p>🏫 Địa chỉ: 207 Giải Phóng, Phường Bạch Mai, Hà Nội</p>
+        </div>
+        <div class="footer-social">
+          <h4>Theo dõi chúng tôi</h4>
+          <p>
+            <a href="#">Facebook</a> | <a href="#">Instagram</a> |
+            <a href="#">Zalo</a>
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p><b>© 2026 Nbreak | NHÓM 11 – THIẾT KẾ WEB</b></p>
+      </div>
+    </footer>
+
+    <script src="thong_bao.js"></script>
+    <script src="account.js"></script>
+    <script src="script.js"></script>
+    <script>
+      // Chuyển đổi giữa form đăng nhập và đăng ký
+      document.querySelectorAll(".auth-tab").forEach((tab) => {
+        tab.addEventListener("click", function () {
+          document
+            .querySelectorAll(".auth-tab")
+            .forEach((t) => t.classList.remove("active"));
+          this.classList.add("active");
+
+          const tabName = this.getAttribute("data-tab");
+          document.getElementById("loginForm").classList.remove("active");
+          document.getElementById("registerForm").classList.remove("active");
+
+          if (tabName === "login") {
+            document.getElementById("loginForm").classList.add("active");
+          } else {
+            document.getElementById("registerForm").classList.add("active");
+          }
+        });
+      });
+
+      function switchToRegister() {
+        document.querySelector('.auth-tab[data-tab="register"]').click();
+      }
+
+      function switchToLogin() {
+        document.querySelector('.auth-tab[data-tab="login"]').click();
+      }
+
+      function handleAuthClick() {
+        window.location.href = "dang_ky.html";
+      }
+
+      function openProfile() {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser) {
+          window.location.href = "dang_ky.html";
+          return;
+        }
+        document.getElementById("profile-name").value = currentUser.name || "";
+        document.getElementById("profile-email").value =
+          currentUser.email || "";
+        document.getElementById("profile-phone").value =
+          currentUser.phone || "";
+        document.getElementById("profile-address").value =
+          currentUser.address || "";
+        document.getElementById("profile-popup").style.display = "flex";
+      }
+
+      function closeProfilePopup() {
+        document.getElementById("profile-popup").style.display = "none";
+      }
+
+      function saveProfile() {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        if (!currentUser) return;
+
+        currentUser.name = document.getElementById("profile-name").value;
+        currentUser.phone = document.getElementById("profile-phone").value;
+        currentUser.address = document.getElementById("profile-address").value;
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const index = users.findIndex((u) => u.email === currentUser.email);
+        if (index !== -1) users[index] = currentUser;
+
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+
+        showToast("✅ Cập nhật thông tin thành công!");
+        closeProfilePopup();
+        updateAccountUI();
+      }
+
+      // Hàm đăng nhập
+      function doLogin() {
+        const email = document.getElementById("login-email").value;
+        const password = document.getElementById("login-password").value;
+
+        if (!email || !password) {
+          showToast("Vui lòng nhập email và mật khẩu!", "error");
+          return;
+        }
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        const user = users.find(
+          (u) => u.email === email && u.password === password,
+        );
+
+        if (user) {
+          localStorage.setItem("currentUser", JSON.stringify(user));
+          showToast("Đăng nhập thành công!", "success");
+          window.location.href = "trang_chu.html";
+        } else {
+          showToast("Sai email hoặc mật khẩu!", "error");
+        }
+      }
+
+      // Hàm đăng ký
+      function doRegister() {
+        const name = document.getElementById("register-name").value;
+        const email = document.getElementById("register-email").value;
+        const phone = document.getElementById("register-phone").value;
+        const password = document.getElementById("register-password").value;
+        const confirm = document.getElementById("register-confirm").value;
+
+        if (!name || !email || !phone || !password) {
+          showToast("Vui lòng nhập đầy đủ thông tin!", "error");
+          return;
+        }
+
+        if (password !== confirm) {
+          showToast("Mật khẩu xác nhận không khớp!", "error");
+          return;
+        }
+
+        const users = JSON.parse(localStorage.getItem("users")) || [];
+        if (users.find((u) => u.email === email)) {
+          showToast("Email đã được đăng ký!", "error");
+          return;
+        }
+
+        const newUser = {
+          id: Date.now(),
+          name: name,
+          email: email,
+          phone: phone,
+          password: password,
+          address: "",
+          role: "user",
+        };
+
+        users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(users));
+        localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+        showToast("Đăng ký thành công!", "success");
+        window.location.href = "trang_chu.html";
+      }
+
+      function updateAccountUI() {
+        const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        const accountText = document.getElementById("account-text");
+        const dropdownUsername = document.getElementById("dropdown-username");
+        const dropdownEmail = document.getElementById("dropdown-email");
+        const loginLogoutText = document.getElementById("login-logout-text");
+
+        if (currentUser) {
+          if (accountText)
+            accountText.innerText = currentUser.name || currentUser.email;
+          if (dropdownUsername)
+            dropdownUsername.innerText = currentUser.name || "Khách hàng";
+          if (dropdownEmail) dropdownEmail.innerText = currentUser.email;
+          if (loginLogoutText)
+            loginLogoutText.innerHTML =
+              '<i class="fa-solid fa-right-from-bracket"></i> Đăng xuất';
+        } else {
+          if (accountText) accountText.innerText = "Tài khoản";
+          if (dropdownUsername) dropdownUsername.innerText = "Khách hàng";
+          if (dropdownEmail) dropdownEmail.innerText = "Chưa đăng nhập";
+          if (loginLogoutText)
+            loginLogoutText.innerHTML =
+              '<i class="fa-solid fa-right-to-bracket"></i> Đăng nhập';
+        }
+      }
+
+      function toggleAccountMenu() {
+        const dropdown = document.getElementById("account-dropdown");
+        if (dropdown) dropdown.classList.toggle("show");
+      }
+
+      function openNotifications() {
+        alert("🔔 Chức năng thông báo đang được phát triển");
+      }
+
+      function handleSearch(event) {
+        if (event.key === "Enter") performSearch();
+      }
+
+      function performSearch() {
+        const keyword = document.getElementById("search-input")?.value;
+        if (keyword)
+          window.location.href = `menu.html?search=${encodeURIComponent(keyword)}`;
+      }
+
+      function openCheckout() {
+        window.location.href = "trang_chu.html";
+      }
+
+      function openOrderHistory() {
+        window.location.href = "history.html";
+      }
+
+      function openHotlinePopup(event) {
+        if (event) event.preventDefault();
+        document.getElementById("hotline-popup").style.display = "block";
+      }
+
+      function closeHotlinePopup() {
+        document.getElementById("hotline-popup").style.display = "none";
+      }
+
+      function makeCall() {
+        window.location.href = "tel:0338909486";
+        closeHotlinePopup();
+      }
+
+      document.addEventListener("click", function (e) {
+        const popup = document.getElementById("hotline-popup");
+        const btn = document.querySelector(".nut-hotline");
+        if (
+          popup &&
+          popup.style.display === "block" &&
+          !popup.contains(e.target) &&
+          !btn.contains(e.target)
+        ) {
+          popup.style.display = "none";
+        }
+
+        const dropdown = document.getElementById("account-dropdown");
+        const accountBtn = document.getElementById("account-btn");
+        if (
+          dropdown &&
+          dropdown.classList.contains("show") &&
+          !dropdown.contains(e.target) &&
+          !accountBtn.contains(e.target)
+        ) {
+          dropdown.classList.remove("show");
+        }
+      });
+
+      // Khởi tạo
+      document.addEventListener("DOMContentLoaded", function () {
+        updateAccountUI();
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartCount = cart.reduce((sum, i) => sum + i.quantity, 0);
+        const cartCountSpan = document.getElementById("cart-count");
+        if (cartCountSpan) cartCountSpan.innerText = cartCount;
+      });
+
+      function showToast(msg, type = "success") {
+        let container = document.getElementById("toast-container");
+        if (!container) {
+          container = document.createElement("div");
+          container.id = "toast-container";
+          container.style.cssText =
+            "position:fixed;top:100px;right:20px;z-index:10000;";
+          document.body.appendChild(container);
+        }
+        const toast = document.createElement("div");
+        toast.style.cssText = `background:${type === "success" ? "#10b981" : "#ef4444"}; color:white; padding:12px 20px; border-radius:8px; margin-top:5px;`;
+        toast.innerText = msg;
+        container.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+      }
+    </script>
+  </body>
+</html>

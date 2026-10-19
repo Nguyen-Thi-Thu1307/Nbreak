@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quản trị - Nbreak Admin</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="icon" type="image/jpg" href="image/logo.jpg" />
+    <style>
+      .admin-container {
+        max-width: 1400px;
+        margin: 20px auto;
+        padding: 0 20px;
+        display: flex;
+        gap: 25px;
+      }
+      .admin-sidebar {
+        width: 280px;
+        background: #4b2e2b;
+        border-radius: 16px;
+        padding: 20px;
+        color: white;
+        height: fit-content;
+        position: sticky;
+        top: 90px;
+      }
+      .admin-logo {
+        text-align: center;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        margin-bottom: 20px;
+      }
+      .admin-logo i {
+        font-size: 50px;
+        color: #c8a27c;
+      }
+      .admin-logo h2 {
+        margin: 10px 0 0;
+        font-size: 20px;
+      }
+      .admin-menu {
+        list-style: none;
+        padding: 0;
+      }
+      .admin-menu li {
+        margin-bottom: 10px;
+      }
+      .admin-menu a {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 15px;
+        color: white;
+        text-decoration: none;
+        border-radius: 10px;
+        transition: 0.3s;
+      }
+      .admin-menu a:hover,
+      .admin-menu a.active {
+        background: #c8a27c;
+        color: #4b2e2b;
+      }
+      .admin-menu a i {
+        width: 22px;
+      }
+      .admin-content {
+        flex: 1;
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+      .admin-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #eee;
+      }
+      .admin-header h1 {
+        color: #4b2e2b;
+        font-size: 24px;
+      }
+      .admin-stats {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+      .stat-card {
+        background: linear-gradient(135deg, #4b2e2b, #6f4e37);
+        color: white;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        transition: transform 0.3s;
+      }
+      .stat-card:hover {
+        transform: translateY(-5px);
+      }
+      .stat-card i {
+        font-size: 35px;
+        margin-bottom: 10px;
+      }
+      .stat-card .number {
+        font-size: 28px;
+        font-weight: bold;
+      }
+      .stat-card .label {
+        font-size: 14px;
+        opacity: 0.9;
+      }
+      .orders-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .orders-table th,
+      .orders-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #eee;
+      }
+      .orders-table th {
+        background: #f5f5f5;
+        color: #4b2e2b;
+      }
+      .orders-table tr:hover {
+        background: #f9f9f9;
+      }
+      .status {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+      }
+      .status-pending {
+        background: #fff3cd;
+        color: #856404;
+      }
+      .status-shipping {
+        background: #cfe2ff;
+        color: #084298;
+      }
+      .status-completed {
+        background: #d1e7dd;
+        color: #0f5132;
+      }
+      .status-cancelled {
+        background: #f8d7da;
+        color: #721c24;
+      }
+      .btn-update, .btn-delete {
+        background: #4b2e2b;
+        color: white;
+        border: none;
+        padding: 5px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin: 0 3px;
+      }
+      .btn-update:hover {
+        background: #6f4e37;
+      }
+      .btn-delete {
+        background: #e74c3c;
+      }
+      .btn-delete:hover {
+        background: #c0392b;
+      }
+      .btn-add {
+        background: #27ae60;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 20px;
+      }
+      .btn-add:hover {
+        background: #219a52;
+      }
+      .login-required {
+        text-align: center;
+        padding: 60px;
+        color: #999;
+      }
+      .filter-bar {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+      .filter-bar input, .filter-bar select {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 10001;
+      }
+      .modal-content {
+        background: white;
+        border-radius: 16px;
+        padding: 25px;
+        max-width: 500px;
+        width: 90%;
+        max-height: 80vh;
+        overflow-y: auto;
+      }
+      .modal-content h3 {
+        margin-bottom: 20px;
+      }
+      .modal-content input, .modal-content textarea, .modal-content select {
+        width: 100%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+      }
+      .modal-buttons {
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+        margin-top: 20px;
+      }
+      @media (max-width: 900px) {
+        .admin-container {
+          flex-direction: column;
+        }
+        .admin-sidebar {
+          width: 100%;
+          position: static;
+        }
+        .admin-stats {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .orders-table {
+          font-size: 12px;
+          overflow-x: auto;
+          display: block;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-khung">
+        <a href="trang_chu.html" class="logo">
+          <img src="image/logo.jpg" alt="Logo Nbreak" class="logo-vong" />
+          <div class="logo-text">Nbreak Admin</div>
+        </a>
+        <div class="nut-dieu-huong">
+          <a href="trang_chu.html" class="nav-item-box">
+            <i class="fa-solid fa-house nav-icon"></i>
+            <span class="nav-text">Trang chủ</span>
+          </a>
+          <div class="nav-item-box" id="account-btn" onclick="toggleAccountMenu()">
+            <i class="fa-solid fa-user nav-icon"></i>
+            <span class="nav-text" id="account-text">Tài khoản</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <div id="admin-content" class="admin-container"></div>
+
+    <footer style="margin-top: 40px">
+      <div class="footer-container">
+        <div class="footer-left">
+          <h3>☕ Nbreak Admin</h3>
+          <p>Hệ thống quản trị</p>
+        </div>
+        <div class="footer-contact">
+          <h4>Liên hệ</h4>
+          <p>📧 Email: <a href="mailto:admin@nbreak.com">admin@nbreak.com</a></p>
+          <p>☎️ Điện thoại: 0123 456 789</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p><b>© 2026 Nbreak | Hệ thống quản trị</b></p>
+      </div>
+    </footer>
+
+    <div id="account-dropdown" class="account-dropdown">
+      <div class="account-header">
+        <i class="fa-solid fa-circle-user"></i>
+        <div>
+          <div id="dropdown-username">Khách hàng</div>
+          <div id="dropdown-email">Chưa đăng nhập</div>
+        </div>
+      </div>
+      <div class="dropdown-divider"></div>
+      <a href="javascript:void(0)" onclick="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i> Đăng xuất
+      </a>
+    </div>
+
+    <!-- MODAL THÊM/SỬA SẢN PHẨM -->
+    <div id="productModal" class="modal">
+      <div class="modal-content">
+        <h3 id="productModalTitle">Thêm sản phẩm</h3>
+        <input type="text" id="productName" placeholder="Tên sản phẩm">
+        <input type="number" id="productPrice" placeholder="Giá">
+        <select id="productCategory">
+          <option value="coffee">Coffee</option>
+          <option value="sinhto">Sinh tố</option>
+          <option value="trasua">Trà sữa</option>
+          <option value="nuocep">Nước ép</option>
+          <option value="travi">Trà vị</option>
+          <option value="doanvat">Đồ ăn vặt</option>
+          <option value="banhngot">Bánh ngọt</option>
+          <option value="combodoanvat">Combo đồ ăn vặt</option>
+          <option value="combodouong">Combo đồ uống</option>
+          <option value="combo">Combo</option>
+        </select>
+        <input type="text" id="productImage" placeholder="Đường dẫn ảnh (image/ten.jpg)">
+        <div class="modal-buttons">
+          <button onclick="closeProductModal()" class="btn-delete">Hủy</button>
+          <button onclick="saveProduct()" class="btn-update">Lưu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL THÊM/SỬA VOUCHER -->
+    <div id="voucherModal" class="modal">
+      <div class="modal-content">
+        <h3 id="voucherModalTitle">Thêm voucher</h3>
+        <input type="text" id="voucherName" placeholder="Tên voucher">
+        <input type="number" id="voucherDiscount" placeholder="Giảm giá (%)">
+        <input type="text" id="voucherDescription" placeholder="Mô tả">
+        <select id="voucherType">
+          <option value="percentage">Phần trăm (%)</option>
+          <option value="fixed">Giá trị cố định</option>
+        </select>
+        <div class="modal-buttons">
+          <button onclick="closeVoucherModal()" class="btn-delete">Hủy</button>
+          <button onclick="saveVoucher()" class="btn-update">Lưu</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toast-container" style="position: fixed; top: 20px; right: 20px; z-index: 10000"></div>
+
+    <script src="account.js"></script>
+    <script>
+      let currentUser = null;
+      let allOrders = [];
+      let allUsers = [];
+      let allProducts = [];
+      let allVouchers = [];
+      let currentProductId = null;
+      let currentVoucherId = null;
+
+      // Khởi tạo dữ liệu mẫu
+      function initData() {
+        allOrders = JSON.parse(localStorage.getItem("orderHistory")) || [];
+        allUsers = JSON.parse(localStorage.getItem("users")) || [];
+        
+        // Sản phẩm mẫu
+        if (!localStorage.getItem("adminProducts")) {
+          const defaultProducts = [
+            { id: 1, name: "Cafe sữa đá", price: 25000, category: "coffee", image: "image/cafe_sua_da.png" },
+            { id: 2, name: "Cafe đen", price: 20000, category: "coffee", image: "image/cafe_den.png" },
+            { id: 3, name: "Trà sữa Matcha Latte", price: 28000, category: "trasua", image: "image/ts_matcha_latte.png" },
+          ];
+          localStorage.setItem("adminProducts", JSON.stringify(defaultProducts));
+        }
+        allProducts = JSON.parse(localStorage.getItem("adminProducts")) || [];
+        
+        // Voucher mẫu
+        if (!localStorage.getItem("adminVouchers")) {
+          const defaultVouchers = [
+            { id: 1, name: "🎁 Mua nhiều giảm giá", discount: 10, description: "Giảm 10% cho đơn từ 5 sản phẩm", type: "percentage" },
+            { id: 2, name: "👑 Khách hàng VIP", discount: 20, description: "Giảm 20% cho khách đặt 10+ đơn", type: "percentage" },
+          ];
+          localStorage.setItem("adminVouchers", JSON.stringify(defaultVouchers));
+        }
+        allVouchers = JSON.parse(localStorage.getItem("adminVouchers")) || [];
+      }
+
+      function checkAdminAccess() {
+        currentUser = JSON.parse(localStorage.getItem("currentUser"));
+        const container = document.getElementById("admin-content");
+        if (!currentUser || currentUser.role !== "admin") {
+          container.innerHTML = `
+            <div class="login-required">
+              <i class="fa-solid fa-lock" style="font-size: 60px; color: #ccc;"></i>
+              <h2>🔐 Yêu cầu đăng nhập</h2>
+              <p>Bạn cần đăng nhập bằng tài khoản Quản trị viên để truy cập trang này.</p>
+              <p><strong>Email: owner@nbreak.com</strong> | <strong>Mật khẩu: admin123</strong></p>
+              <a href="trang_chu.html" style="display: inline-block; margin-top: 20px; background: #4b2e2b; color: white; padding: 10px 25px; border-radius: 30px; text-decoration: none;">← Về trang chủ</a>
+            </div>
+          `;
+          return false;
+        }
+        return true;
+      }
+
+      function renderAdminDashboard() {
+        if (!checkAdminAccess()) return;
+        initData();
+
+        const totalOrders = allOrders.length;
+        const totalRevenue = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+        const pendingOrders = allOrders.filter(o => o.status === "pending").length;
+        const completedOrders = allOrders.filter(o => o.status === "completed").length;
+        const totalCustomers = [...new Set(allOrders.map(o => o.userEmail).filter(e => e))].length;
+
+        const container = document.getElementById("admin-content");
+        container.innerHTML = `
+          <div class="admin-sidebar">
+            <div class="admin-logo">
+              <i class="fa-solid fa-shield-haltered"></i>
+              <h2>Admin Panel</h2>
+            </div>
+            <ul class="admin-menu">
+              <li><a href="javascript:void(0)" onclick="showTab('dashboard')" class="active" id="tab-dashboard"><i class="fa-solid fa-chart-line"></i> Tổng quan</a></li>
+              <li><a href="javascript:void(0)" onclick="showTab('orders')" id="tab-orders"><i class="fa-solid fa-truck"></i> Đơn hàng</a></li>
+              <li><a href="javascript:void(0)" onclick="showTab('customers')" id="tab-customers"><i class="fa-solid fa-users"></i> Khách hàng</a></li>
+              <li><a href="javascript:void(0)" onclick="showTab('products')" id="tab-products"><i class="fa-solid fa-mug-hot"></i> Sản phẩm</a></li>
+              <li><a href="javascript:void(0)" onclick="showTab('vouchers')" id="tab-vouchers"><i class="fa-solid fa-ticket"></i> Voucher</a></li>
+            </ul>
+          </div>
+          <div class="admin-content" id="admin-tab-content"></div>
+        `;
+        showTab("dashboard");
+      }
+
+      function showTab(tabName) {
+        document.querySelectorAll(".admin-menu a").forEach(a => a.classList.remove("active"));
+        document.getElementById(`tab-${tabName}`).classList.add("active");
+        const contentDiv = document.getElementById("admin-tab-content");
+
+        if (tabName === "dashboard") {
+          const totalOrders = allOrders.length;
+          const totalRevenue = allOrders.reduce((sum, o) => sum + (o.total || 0), 0);
+          const pendingOrders = allOrders.filter(o => o.status === "pending").length;
+          const completedOrders = allOrders.filter(o => o.status === "completed").length;
+          const totalCustomers = [...new Set(allOrders.map(o => o.userEmail).filter(e => e))].length;
+
+          contentDiv.innerHTML = `
+            <div class="admin-header">
+              <h1>📊 Tổng quan</h1>
+              <span>Xin chào, ${currentUser.name}</span>
+            </div>
+            <div class="admin-stats">
+              <div class="stat-card"><i class="fa-solid fa-receipt"></i><div class="number">${totalOrders}</div><div class="label">Tổng đơn hàng</div></div>
+              <div class="stat-card"><i class="fa-solid fa-clock"></i><div class="number">${pendingOrders}</div><div class="label">Đang xử lý</div></div>
+              <div class="stat-card"><i class="fa-solid fa-check-circle"></i><div class="number">${completedOrders}</div><div class="label">Hoàn thành</div></div>
+              <div class="stat-card"><i class="fa-solid fa-users"></i><div class="number">${totalCustomers}</div><div class="label">Khách hàng</div></div>
+            </div>
+            <div class="admin-stats">
+              <div class="stat-card"><i class="fa-solid fa-money-bill-wave"></i><div class="number">${totalRevenue.toLocaleString()}đ</div><div class="label">Doanh thu</div></div>
+            </div>
+          `;
+        } 
+        else if (tabName === "orders") {
+          contentDiv.innerHTML = `
+            <div class="admin-header"><h1>📦 Quản lý đơn hàng</h1><span>${allOrders.length} đơn hàng</span></div>
+            <div class="filter-bar">
+              <select id="orderStatusFilter" onchange="filterOrders()">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="pending">Đang xử lý</option>
+                <option value="shipping">Đang giao</option>
+                <option value="completed">Hoàn thành</option>
+                <option value="cancelled">Đã hủy</option>
+              </select>
+              <input type="text" id="orderSearch" placeholder="Tìm theo mã đơn hoặc tên khách" onkeyup="filterOrders()">
+            </div>
+            <div id="ordersTableContainer"></div>
+          `;
+          filterOrders();
+        } 
+        else if (tabName === "customers") {
+          const customerMap = new Map();
+          allOrders.forEach(order => {
+            if (order.userEmail) {
+              if (!customerMap.has(order.userEmail)) {
+                customerMap.set(order.userEmail, {
+                  email: order.userEmail,
+                  name: order.customer?.name,
+                  phone: order.customer?.phone,
+                  address: order.customer?.address,
+                  orders: 0,
+                  total: 0
+                });
+              }
+              const c = customerMap.get(order.userEmail);
+              c.orders++;
+              c.total += order.total || 0;
+            }
+          });
+          const customers = Array.from(customerMap.values());
+
+          contentDiv.innerHTML = `
+            <div class="admin-header"><h1>👥 Khách hàng</h1><span>${customers.length} khách hàng</span></div>
+            <div class="filter-bar">
+              <input type="text" id="customerSearch" placeholder="Tìm theo email hoặc tên" onkeyup="filterCustomers()">
+            </div>
+            <div id="customersTableContainer"></div>
+          `;
+          filterCustomers();
+        } 
+        else if (tabName === "products") {
+          contentDiv.innerHTML = `
+            <div class="admin-header">
+              <h1>☕ Quản lý sản phẩm</h1>
+              <button class="btn-add" onclick="openAddProductModal()"><i class="fa-solid fa-plus"></i> Thêm sản phẩm</button>
+            </div>
+            <div class="filter-bar">
+              <select id="productCategoryFilter" onchange="filterProducts()">
+                <option value="all">Tất cả danh mục</option>
+                <option value="coffee">Coffee</option>
+                <option value="sinhto">Sinh tố</option>
+                <option value="trasua">Trà sữa</option>
+                <option value="nuocep">Nước ép</option>
+                <option value="travi">Trà vị</option>
+                <option value="doanvat">Đồ ăn vặt</option>
+                <option value="banhngot">Bánh ngọt</option>
+                <option value="combodoanvat">Combo đồ ăn vặt</option>
+                <option value="combodouong">Combo đồ uống</option>
+                <option value="combo">Combo</option>
+              </select>
+              <input type="text" id="productSearch" placeholder="Tìm theo tên" onkeyup="filterProducts()">
+            </div>
+            <div id="productsTableContainer"></div>
+          `;
+          filterProducts();
+        } 
+        else if (tabName === "vouchers") {
+          contentDiv.innerHTML = `
+            <div class="admin-header">
+              <h1>🎫 Quản lý Voucher</h1>
+              <button class="btn-add" onclick="openAddVoucherModal()"><i class="fa-solid fa-plus"></i> Thêm voucher</button>
+            </div>
+            <div id="vouchersTableContainer"></div>
+          `;
+          renderVouchers();
+        }
+      }
+
+      function filterOrders() {
+        const status = document.getElementById("orderStatusFilter")?.value || "all";
+        const search = document.getElementById("orderSearch")?.value?.toLowerCase() || "";
+        let filtered = [...allOrders];
+        if (status !== "all") filtered = filtered.filter(o => o.status === status);
+        if (search) filtered = filtered.filter(o => o.id?.toLowerCase().includes(search) || o.customer?.name?.toLowerCase().includes(search));
+        
+        const container = document.getElementById("ordersTableContainer");
+        container.innerHTML = `
+          <table class="orders-table">
+            <thead><tr><th>Mã đơn</th><th>Ngày đặt</th><th>Khách hàng</th><th>Tổng tiền</th><th>Trạng thái</th><th>Thao tác</th></tr></thead>
+            <tbody>
+              ${filtered.map(order => `
+                <tr>
+                  <td>#${order.id}</td>
+                  <td>${order.date || "Chưa rõ"}</td>
+                  <td>${order.customer?.name || "Khách"}</td>
+                  <td>${(order.total || 0).toLocaleString()}đ</td>
+                  <td><span class="status status-${order.status || "pending"}">${getStatusText(order.status)}</span></td>
+                  <td>
+                    <button class="btn-update" onclick="viewOrderDetail('${order.id}')">Xem</button>
+                    <select onchange="updateOrderStatus('${order.id}', this.value)" style="padding:5px; border-radius:8px;">
+                      <option value="pending" ${order.status === "pending" ? "selected" : ""}>Đang xử lý</option>
+                      <option value="shipping" ${order.status === "shipping" ? "selected" : ""}>Đang giao</option>
+                      <option value="completed" ${order.status === "completed" ? "selected" : ""}>Hoàn thành</option>
+                      <option value="cancelled" ${order.status === "cancelled" ? "selected" : ""}>Đã hủy</option>
+                    </select>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      function filterCustomers() {
+        const search = document.getElementById("customerSearch")?.value?.toLowerCase() || "";
+        const customerMap = new Map();
+        allOrders.forEach(order => {
+          if (order.userEmail) {
+            if (!customerMap.has(order.userEmail)) {
+              customerMap.set(order.userEmail, {
+                email: order.userEmail,
+                name: order.customer?.name,
+                phone: order.customer?.phone,
+                address: order.customer?.address,
+                orders: 0,
+                total: 0
+              });
+            }
+            const c = customerMap.get(order.userEmail);
+            c.orders++;
+            c.total += order.total || 0;
+          }
+        });
+        let customers = Array.from(customerMap.values());
+        if (search) customers = customers.filter(c => c.email?.toLowerCase().includes(search) || c.name?.toLowerCase().includes(search));
+        
+        const container = document.getElementById("customersTableContainer");
+        container.innerHTML = `
+          <table class="orders-table">
+            <thead><tr><th>Email</th><th>Tên khách hàng</th><th>SĐT</th><th>Địa chỉ</th><th>Số đơn</th><th>Tổng chi tiêu</th></tr></thead>
+            <tbody>
+              ${customers.map(c => `
+                <tr>
+                  <td>${c.email}</td>
+                  <td>${c.name || "Chưa cập nhật"}</td>
+                  <td>${c.phone || "---"}</td>
+                  <td>${c.address || "---"}</td>
+                  <td>${c.orders}</td>
+                  <td>${c.total.toLocaleString()}đ</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      function filterProducts() {
+        const category = document.getElementById("productCategoryFilter")?.value || "all";
+        const search = document.getElementById("productSearch")?.value?.toLowerCase() || "";
+        let filtered = [...allProducts];
+        if (category !== "all") filtered = filtered.filter(p => p.category === category);
+        if (search) filtered = filtered.filter(p => p.name?.toLowerCase().includes(search));
+        
+        const container = document.getElementById("productsTableContainer");
+        container.innerHTML = `
+          <table class="orders-table">
+            <thead><tr><th>ID</th><th>Ảnh</th><th>Tên sản phẩm</th><th>Giá</th><th>Danh mục</th><th>Thao tác</th></tr></thead>
+            <tbody>
+              ${filtered.map(p => `
+                <tr>
+                  <td>${p.id}</td>
+                  <td><img src="${p.image}" style="width:40px; height:40px; object-fit:cover; border-radius:8px;" onerror="this.src='image/logo.jpg'"></td>
+                  <td>${p.name}</td>
+                  <td>${p.price.toLocaleString()}đ</td>
+                  <td>${p.category}</td>
+                  <td>
+                    <button class="btn-update" onclick="editProduct(${p.id})">Sửa</button>
+                    <button class="btn-delete" onclick="deleteProduct(${p.id})">Xóa</button>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      function renderVouchers() {
+        const container = document.getElementById("vouchersTableContainer");
+        container.innerHTML = `
+          <table class="orders-table">
+            <thead><tr><th>ID</th><th>Tên voucher</th><th>Giảm giá</th><th>Mô tả</th><th>Loại</th><th>Thao tác</th></tr></thead>
+            <tbody>
+              ${allVouchers.map(v => `
+                <tr>
+                  <td>${v.id}</td>
+                  <td>${v.name}</td>
+                  <td>${v.discount}%</td>
+                  <td>${v.description || "---"}</td>
+                  <td>${v.type === "percentage" ? "Phần trăm" : "Cố định"}</td>
+                  <td>
+                    <button class="btn-update" onclick="editVoucher(${v.id})">Sửa</button>
+                    <button class="btn-delete" onclick="deleteVoucher(${v.id})">Xóa</button>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+
+      function getStatusText(status) {
+        const map = { pending: "🟡 Đang xử lý", shipping: "📦 Đang giao", completed: "✅ Hoàn thành", cancelled: "❌ Đã hủy" };
+        return map[status] || "🟡 Đang xử lý";
+      }
+
+      function viewOrderDetail(orderId) {
+        const order = allOrders.find(o => o.id === orderId);
+        if (!order) return;
+        let itemsHtml = order.items?.map(i => `${i.name} x ${i.quantity} = ${(i.price * i.quantity).toLocaleString()}đ`).join("\n") || "Không có sản phẩm";
+        alert(`📋 ĐƠN HÀNG #${order.id}\n👤 Khách: ${order.customer?.name}\n📞 SĐT: ${order.customer?.phone}\n🏠 Địa chỉ: ${order.customer?.address}\n\n🛒 Sản phẩm:\n${itemsHtml}\n💰 Tổng: ${(order.total || 0).toLocaleString()}đ`);
+      }
+
+      function updateOrderStatus(orderId, newStatus) {
+        const order = allOrders.find(o => o.id === orderId);
+        if (order) {
+          order.status = newStatus;
+          localStorage.setItem("orderHistory", JSON.stringify(allOrders));
+          showToast(`✅ Đã cập nhật đơn hàng #${orderId} thành ${getStatusText(newStatus)}`);
+          filterOrders();
+        }
+      }
+
+      function openAddProductModal() {
+        currentProductId = null;
+        document.getElementById("productModalTitle").innerText = "Thêm sản phẩm";
+        document.getElementById("productName").value = "";
+        document.getElementById("productPrice").value = "";
+        document.getElementById("productCategory").value = "coffee";
+        document.getElementById("productImage").value = "";
+        document.getElementById("productModal").style.display = "flex";
+      }
+
+      function editProduct(id) {
+        const product = allProducts.find(p => p.id === id);
+        if (product) {
+          currentProductId = id;
+          document.getElementById("productModalTitle").innerText = "Sửa sản phẩm";
+          document.getElementById("productName").value = product.name;
+          document.getElementById("productPrice").value = product.price;
+          document.getElementById("productCategory").value = product.category;
+          document.getElementById("productImage").value = product.image;
+          document.getElementById("productModal").style.display = "flex";
+        }
+      }
+
+      function saveProduct() {
+        const name = document.getElementById("productName").value;
+        const price = parseInt(document.getElementById("productPrice").value);
+        const category = document.getElementById("productCategory").value;
+        const image = document.getElementById("productImage").value;
+        if (!name || !price) { showToast("Vui lòng nhập đầy đủ thông tin!", "error"); return; }
+        if (currentProductId) {
+          const index = allProducts.findIndex(p => p.id === currentProductId);
+          if (index !== -1) allProducts[index] = { ...allProducts[index], name, price, category, image };
+          showToast("✅ Cập nhật sản phẩm thành công!");
+        } else {
+          const newId = Date.now();
+          allProducts.push({ id: newId, name, price, category, image });
+          showToast("✅ Thêm sản phẩm thành công!");
+        }
+        localStorage.setItem("adminProducts", JSON.stringify(allProducts));
+        closeProductModal();
+        filterProducts();
+      }
+
+      function deleteProduct(id) {
+        if (confirm("Bạn có chắc muốn xóa sản phẩm này?")) {
+          allProducts = allProducts.filter(p => p.id !== id);
+          localStorage.setItem("adminProducts", JSON.stringify(allProducts));
+          showToast("🗑️ Đã xóa sản phẩm!");
+          filterProducts();
+        }
+      }
+
+      function openAddVoucherModal() {
+        currentVoucherId = null;
+        document.getElementById("voucherModalTitle").innerText = "Thêm voucher";
+        document.getElementById("voucherName").value = "";
+        document.getElementById("voucherDiscount").value = "";
+        document.getElementById("voucherDescription").value = "";
+        document.getElementById("voucherType").value = "percentage";
+        document.getElementById("voucherModal").style.display = "flex";
+      }
+
+      function editVoucher(id) {
+        const voucher = allVouchers.find(v => v.id === id);
+        if (voucher) {
+          currentVoucherId = id;
+          document.getElementById("voucherModalTitle").innerText = "Sửa voucher";
+          document.getElementById("voucherName").value = voucher.name;
+          document.getElementById("voucherDiscount").value = voucher.discount;
+          document.getElementById("voucherDescription").value = voucher.description || "";
+          document.getElementById("voucherType").value = voucher.type;
+          document.getElementById("voucherModal").style.display = "flex";
+        }
+      }
+
+      function saveVoucher() {
+        const name = document.getElementById("voucherName").value;
+        const discount = parseInt(document.getElementById("voucherDiscount").value);
+        const description = document.getElementById("voucherDescription").value;
+        const type = document.getElementById("voucherType").value;
+        if (!name || !discount) { showToast("Vui lòng nhập đầy đủ thông tin!", "error"); return; }
+        if (currentVoucherId) {
+          const index = allVouchers.findIndex(v => v.id === currentVoucherId);
+          if (index !== -1) allVouchers[index] = { ...allVouchers[index], name, discount, description, type };
+          showToast("✅ Cập nhật voucher thành công!");
+        } else {
+          const newId = Date.now();
+          allVouchers.push({ id: newId, name, discount, description, type });
+          showToast("✅ Thêm voucher thành công!");
+        }
+        localStorage.setItem("adminVouchers", JSON.stringify(allVouchers));
+        closeVoucherModal();
+        renderVouchers();
+      }
+
+      function deleteVoucher(id) {
+        if (confirm("Bạn có chắc muốn xóa voucher này?")) {
+          allVouchers = allVouchers.filter(v => v.id !== id);
+          localStorage.setItem("adminVouchers", JSON.stringify(allVouchers));
+          showToast("🗑️ Đã xóa voucher!");
+          renderVouchers();
+        }
+      }
+
+      function closeProductModal() { document.getElementById("productModal").style.display = "none"; }
+      function closeVoucherModal() { document.getElementById("voucherModal").style.display = "none"; }
+      function showToast(msg) { alert(msg); }
+
+      function toggleAccountMenu() {
+        document.getElementById("account-dropdown").classList.toggle("show");
+      }
+      function logout() {
+        localStorage.removeItem("currentUser");
+        window.location.href = "trang_chu.html";
+      }
+      function updateAccountUI() {
+        const user = JSON.parse(localStorage.getItem("currentUser"));
+        const accountText = document.getElementById("account-text");
+        if (accountText) accountText.innerText = user?.name || "Tài khoản";
+      }
+
+      document.addEventListener("DOMContentLoaded", () => {
+        updateAccountUI();
+        renderAdminDashboard();
+        document.addEventListener("click", (e) => {
+          const dropdown = document.getElementById("account-dropdown");
+          const btn = document.getElementById("account-btn");
+          if (dropdown && btn && !btn.contains(e.target) && !dropdown.contains(e.target))
+            dropdown.classList.remove("show");
+        });
+      });
+    </script>
+  </body>
+</html>
